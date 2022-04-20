@@ -1,0 +1,64 @@
+.not-found {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 35px;
+	background-color: var(--primary-color);
+	color: #fff;
+
+	div{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	div:not(:nth-child(4)) {
+		text-transform: uppercase;
+	}
+
+	div:nth-child(4) {
+		animation-name: pulse;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		animation-timing-function: ease-in-out;
+	}
+
+	span {
+		font-weight: 900;
+		font-size: 70px;
+		color: #fff;
+	}
+
+	svg {
+		g {
+			path:nth-child(3) {
+				animation: sadFace 1s ease-in-out;
+				transform-origin: center;
+				animation-fill-mode: forwards;
+			}
+
+			path:nth-child(5) {
+				animation: eye 1s ease-in-out;
+				transform-origin: center;
+				animation-fill-mode: forwards;
+			}
+		}
+
+		@keyframes sadFace {
+			to {
+				transform: rotateX(150deg) translateY(-5px);
+			}
+		}
+
+		@keyframes eye {
+			to {
+				transform: translateX(-13px);
+			}
+		}
+
+	}
+}
