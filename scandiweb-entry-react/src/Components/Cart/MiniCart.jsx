@@ -17,21 +17,23 @@ class MiniCart extends Component {
 						)
 					})
 				}
-				<div className='price-container'>
-					<span>
-						Total
-					</span>
-					<span>
-						$500
-					</span>
-				</div>
-				<div className='mini-cart-btns'>
-					<button>
-						<Link to='/cart'>view bag</Link>
-					</button>
-					<button>
-						<Link to='/checkout'>checkout</Link>
-					</button>
+				<div className='mini-cart-summary'>
+					<div className='price-container'>
+						<span>
+							Total
+						</span>
+						<span>
+							$500
+						</span>
+					</div>
+					<div className='btn-container'>
+						<button>
+							<Link to='/cart'>view bag</Link>
+						</button>
+						<button>
+							<Link to='/checkout'>checkout</Link>
+						</button>
+					</div>
 				</div>
 			</div>
 		)

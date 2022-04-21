@@ -14,14 +14,28 @@ class Cart extends Component {
 						Cart
 					</h1>
 					{
-						this.props.cart.map((data, index) => {
+						this.props.cart.map((data) => {
 							return (
-								<div key={index}>
+								<>
+									<hr />
 									<CartItem data={data} />
-								</div>
+								</>
 							)
 						})
 					}
+					<div className='cart-footer'>
+						<div>
+							<span>Total Items:</span>
+							<span></span>
+						</div>
+						<div>
+							<span>Total Price:</span>
+							<span></span>
+						</div>
+						<button>
+							clear cart
+						</button>
+					</div>
 				</div>
 			</>
 		)

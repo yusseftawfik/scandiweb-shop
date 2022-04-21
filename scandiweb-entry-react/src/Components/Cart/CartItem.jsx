@@ -5,11 +5,11 @@ import logo from '../../Assets/logo.svg';
 import remove from '../../Assets/remove.svg';
 import '../../Styles/CartItem.scss';
 
-
 class CartItem extends Component {
 	render () {
+		console.log()
 		return (
-			<div className='mini-cart-item'>
+			<div className='cart-item'>
 				<div className='item-data'>
 					<span>Apollo Running  Short</span>
 					<span>$50.00</span>
@@ -19,13 +19,15 @@ class CartItem extends Component {
 					</div>
 				</div>
 				<div className='qty-btns'>
-					<div>+</div>
-					<span>1</span>
-					<img src={remove} alt='' width='28' height='28' />
-					{/* <div>-</div> */}
+					<div onClick={() => adjustQty()}>+</div>
+					<span>{this.props.data.qty}</span>
+					<img src={remove} alt='' width='25' height='25' onClick={() => removeFromCart()} />
+					{/* <div onClick={() => adjustQty()}>-</div> */}
 				</div>
-				<div className='item-image'>
-					<img src={logo} alt='' width='100%' height='100%' />
+				<div className='end'>
+					<div className='item-image'>
+						<img src={logo} alt='item' height='100' width='100' />
+					</div>
 				</div>
 			</div>
 		)
