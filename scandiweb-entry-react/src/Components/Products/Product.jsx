@@ -16,12 +16,12 @@ class Product extends Component {
 				{this.props.category
 					? this.props.data.category.products
 						.filter((item) => item.category === this.props.category)
-						.map((product) => {
+						.map((product, index) => {
 							let price = product.prices.find(
 								(item) => item.currency.label === this.props.currency
 							);
 							return (
-								<div>
+								<div key={index}>
 									<div className="prd-container">
 										{product.inStock ? null : (
 											<div className="out-of-stock">
@@ -72,7 +72,7 @@ class Product extends Component {
 							(item) => item.currency.label === this.props.currency
 						);
 						return (
-							<div>
+							<div key={index}>
 								<div className="prd-container">
 									{product.inStock ? null : (
 										<div className="out-of-stock">
@@ -104,7 +104,7 @@ class Product extends Component {
 										</div>
 										<div className="product-name">
 											<Link to={`/product/${product.id}`}>
-												<span onClick={() => this.props.loadCurrentItems({...product,price})}>
+												<span onClick={() => this.props.loadCurrentItems({ ...product, price })}>
 													{product.name}
 												</span>
 											</Link>

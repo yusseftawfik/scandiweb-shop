@@ -5,7 +5,23 @@ import CartItem from './CartItem';
 import '../../Styles/Cart.scss';
 
 class Cart extends Component {
+	state = {
+		cartTotalPrice: 0,
+	}
+
+	componentDidMount () {
+		let price = 0;
+		this.props.cart.forEach(item => {
+			price += item.price.amount * item.qty
+		})
+		this.setState({
+			cartTotalPrice: Math.ceil(price)
+		})
+	}
+
+
 	render () {
+		console.log(this.props.cart)
 		return (
 			<>
 				<Navbar />
@@ -26,11 +42,15 @@ class Cart extends Component {
 					<div className='cart-footer'>
 						<div>
 							<span>Total Items:</span>
-							<span></span>
+							<span>
+								{this.props.cart.length}
+							</span>
 						</div>
 						<div>
 							<span>Total Price:</span>
-							<span></span>
+							<span>
+								{this.props.currency}{" "}{this.state.cartTotalPrice}
+							</span>
 						</div>
 						<button>
 							clear cart
@@ -45,6 +65,7 @@ const mapStateToProps = (state) => {
 	return {
 		currentItem: state.products.currentItem,
 		cart: state.products.cart,
+		currency: state.products.currency,
 	};
 };
 export default connect(mapStateToProps)(Cart);

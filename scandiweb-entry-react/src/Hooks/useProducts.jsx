@@ -19,13 +19,10 @@ const PRODDUCT_QUERY = gql`
                 }
             }
             attributes{
-                id
                 name
-                type
                 items{
                     displayValue
                     value
-                    id
                 }
             }
         }

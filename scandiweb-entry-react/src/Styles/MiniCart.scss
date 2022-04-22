@@ -52,23 +52,23 @@
 		align-items: center;
 		gap: 10px;
 
-		button {
+		div {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			padding: 15px 30px;
-			width: 140px;
-			height: 45px;
+			width: 90px;
+			height: 30px;
 			background: #FFFFFF;
 			border: 1px solid #1D1F22;
 			text-transform: uppercase;
 			font-weight: 600;
+		}
 
-			&:nth-child(2) {
-				background: var(--primary-color);
-				border: 1px solid var(--primary-color);
-				color: #FFFFFF !important;
-			}
+		.checkout-btn {
+			background: var(--primary-color);
+			border: 1px solid var(--primary-color);
+			color: #FFFFFF !important;
 		}
 	}
 }

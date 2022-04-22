@@ -10,7 +10,7 @@ class PDP extends Component {
 		index: 0
 	}
 	render () {
-		console.log(this.props.currentItem.gallery);
+		console.log(this.props.currentItem)
 		return (
 			<>
 				<Navbar />
@@ -48,7 +48,7 @@ class PDP extends Component {
 						</div>
 						<div>
 							<button
-								onClick={() => this.props.addToCart(this.props.currentItem.id)}
+								onClick={() => this.props.addToCart(this.props.currentItem)}
 							>
 								add to cart
 							</button>

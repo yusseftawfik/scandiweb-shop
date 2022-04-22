@@ -68,4 +68,22 @@
 		align-items: center;
 		padding: 5px;
 	}
+
+	.attributes-value {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: .1px solid #000;
+		width: 50px;
+		height: 35px;
+		font-size: 12px;
+
+		&:hover {
+			background: var(--primary-color);
+			color: #fff;
+			font-weight: 900;
+			border: .1px solid var(--primary-color);
+			transition-duration: .3s;
+		}
+	}
 }
