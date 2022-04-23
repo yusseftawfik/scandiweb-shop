@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
-import Navbar from '../Navbar/Navbar'
-
+import React, { Component } from 'react';
 export default class Checkout extends Component {
 	render () {
 		return (
 			<>
-				<Navbar />
-				<div>Checkout</div>
+				<div>
+					Checkout Page
+				</div>
 			</>
 		)
 	}

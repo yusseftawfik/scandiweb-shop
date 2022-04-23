@@ -1,4 +1,5 @@
 import * as actionTypes from "./Types";
+import useProducts
 
 const products = [
 	{

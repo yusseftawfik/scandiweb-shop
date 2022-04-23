@@ -5,31 +5,21 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	font-size: 35px;
+	font-size: 25px;
 	background-color: var(--primary-color);
 	color: #fff;
 
-	div{
+	div {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}
-
-	div:not(:nth-child(4)) {
 		text-transform: uppercase;
-	}
-
-	div:nth-child(4) {
-		animation-name: pulse;
-		animation-duration: 2s;
-		animation-iteration-count: infinite;
-		animation-direction: alternate;
-		animation-timing-function: ease-in-out;
+		letter-spacing: 3.5px;
 	}
 
 	span {
 		font-weight: 900;
-		font-size: 70px;
+		font-size: 30px;
 		color: #fff;
 	}
 

@@ -25,15 +25,13 @@ export default class NotFound extends Component {
 					</defs>
 				</svg>
 				<div>
-					<span>
-						404 error
-					</span>
+					404 error
 				</div>
 				<div>
-					<span>page not found</span>
+					page not found
 				</div>
 				<div>
-					<span>Let's go <Link to='/'>Home</Link> and try from there!</span>
+					Let's go <Link to='/'><span>Home</span></Link> and try from there!
 				</div>
 			</div>
 		)

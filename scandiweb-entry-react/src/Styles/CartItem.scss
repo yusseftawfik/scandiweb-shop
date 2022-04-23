@@ -3,14 +3,13 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: 10px;
-	width: 100%;
 
 	.item-data {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		align-items: flex-start;
-		width: inherit;
+		min-width: 45%;
 		height: 130px;
 
 		span:nth-child(1) {
@@ -46,7 +45,7 @@
 		justify-content: space-between;
 		height: 130px;
 
-		div {
+		button {
 			width: 25px;
 			height: 25px;
 			border: 1px solid #000;
@@ -55,10 +54,16 @@
 			align-items: center;
 			font-size: 40px;
 			font-weight: 200;
+			background: #fff;
 		}
 
-		span {
+		input {
 			font-weight: 700;
+			width: 25px;
+			height: 25px;
+			border: 0;
+			outline: 0;
+			padding-left: 15px;
 		}
 	}
 

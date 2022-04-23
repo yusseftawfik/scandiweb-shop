@@ -19,7 +19,6 @@ class Navbar extends Component {
 			backdrop: false,
 		};
 	}
-
 	openCart = (e) => {
 		e.preventDefault();
 		this.setState({
@@ -28,7 +27,6 @@ class Navbar extends Component {
 			backdrop: true
 		});
 	};
-
 	openCurrency = (e) => {
 		e.preventDefault();
 		this.setState({
@@ -36,22 +34,15 @@ class Navbar extends Component {
 			openCart: false
 		});
 	};
-
 	closeCart = () => {
 		this.setState({
 			openCart: false,
 			backdrop: false
 		});
 	};
-
 	closeCurrency = () => {
 		this.setState({ openCurrency: false });
 	};
-
-	// componentDidUpdate () {
-	// 	localStorage.setItem("Category", JSON.stringify(this.props.category))
-	// }
-
 	render () {
 		return (
 			<>
@@ -110,17 +101,14 @@ class Navbar extends Component {
 		);
 	}
 }
-
 const mapStateToProps = (state) => {
 	return {
 		cart: state.products.cart,
 	};
 };
-
 const mapDispatchToProps = (dispatch) => {
 	return {
 		changeCategory: (name) => dispatch(changeCategory(name))
 	};
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

@@ -7,10 +7,9 @@ import "../../Styles/PDP.scss";
 
 class PDP extends Component {
 	state = {
-		index: 0
-	}
+		index: 0,
+	};
 	render () {
-		console.log(this.props.currentItem)
 		return (
 			<>
 				<Navbar />
@@ -18,26 +17,42 @@ class PDP extends Component {
 					<div className="gallery">
 						<div className="mini">
 							{this.props.currentItem.gallery.map((item, index) => (
-								<img src={item} height="75" width="auto" alt="product" onClick={() => this.setState({ index: index })} />
+								<img
+									src={item}
+									height="auto"
+									width="50"
+									alt="product"
+									onClick={() => this.setState({ index: index })}
+								/>
 							))}
 						</div>
 						<div className="main">
-							<img src={this.props.currentItem.gallery[this.state.index]} height="550" width="500" alt="product" />
+							<img
+								src={this.props.currentItem.gallery[this.state.index]}
+								height="auto"
+								width="350"
+								alt="product"
+							/>
 						</div>
 					</div>
 					<div className="data-container">
 						<div className="product-name">
 							<p>{this.props.currentItem.name}</p>
+							<span>{this.props.currentItem.brand}</span>
 						</div>
 						<div className="product-size">
-							<span>{this.props.currentItem.attributes[0].name}</span>
-							<div>
-								{this.props.currentItem.attributes[0].items.map((item) => {
-									return (
-										<div className="attributes-value">{item.displayValue}</div>
-									);
-								})}
-							</div>
+							{this.props.currentItem.attributes[0] ? (
+								<>
+									<span>{this.props.currentItem.attributes[0].name}</span>
+									<div>
+										{this.props.currentItem.attributes[0].items.map((item) => {
+											return (
+												<div className="attributes-value">{item.displayValue}</div>
+											);
+										})}
+									</div>
+								</>
+							) : null}
 						</div>
 						<div className="product-price">
 							<span>price:</span>
@@ -47,11 +62,20 @@ class PDP extends Component {
 							</div>
 						</div>
 						<div>
-							<button
-								onClick={() => this.props.addToCart(this.props.currentItem)}
-							>
-								add to cart
-							</button>
+							{this.props.currentItem.inStock ?
+								(
+									<button
+										className="addtocart-btn"
+										onClick={() => this.props.addToCart(this.props.currentItem.id)}
+									>
+										add to cart
+									</button>
+								) :
+								(
+									<button disabled className='outofstock-btn'>
+										out of stock
+									</button>)
+							}
 						</div>
 						<div className="description">
 							{this.props.currentItem.description.replace(

@@ -3,13 +3,22 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from './CartItem';
 import '../../Styles/MiniCart.scss';
-
 class MiniCart extends Component {
-	state = {
-		cartTotalPrice: 0,
+	constructor(props) {
+		super(props);
+		this.state = {
+			cartTotalPrice: 0,
+		}
 	}
-
 	componentDidMount () {
+		this.setPrice();
+	}
+	componentWillReceiveProps (previousState) {
+		if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
+			this.setPrice()
+		}
+	}
+	setPrice () {
 		let price = 0;
 		this.props.cart.forEach(item => {
 			price += item.price.amount * item.qty
@@ -18,14 +27,13 @@ class MiniCart extends Component {
 			cartTotalPrice: Math.ceil(price)
 		})
 	}
-
 	render () {
 		return (
 			<div className='mini-cart'>
 				{
 					this.props.cart.map((data, index) => {
 						return (
-							<div key={index}>
+							<div key={index} style={{ width: '-webkit-fill-available' }}>
 								<CartItem data={data} />
 							</div>
 						)
@@ -57,7 +65,6 @@ class MiniCart extends Component {
 		)
 	}
 }
-
 const mapStateToProps = (state) => {
 	return {
 		cart: state.products.cart,

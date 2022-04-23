@@ -5,22 +5,35 @@
 	align-items: flex-start;
 	flex-direction: column;
 	gap: 25px;
+	position: relative;
+
+	h1 {
+		font-weight: 600;
+		margin: 30px 0 50px 0;
+		text-transform: uppercase;
+	}
+
+	hr {
+		border: 0.5px solid #e5e5e5;
+		width: 100%;
+	}
 
 	.cart-footer {
+		width: 70%;
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
-		width: -webkit-fill-available;
-		font-size: 25px;
-		padding: 50px 20px 0px;
+		padding: 50px;
+		position: fixed;
+		bottom: 0;
+		z-index: 3;
+		background: #fff;
+		box-shadow: 0px 4px 5px 0px #a8acb010;
 
 		div {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			gap: 20px;
-
-			span {}
 
 			span:nth-child(1) {
 				color: var(--primary-color);
@@ -34,31 +47,33 @@
 			}
 		}
 
-		button {
-			color: #fff;
+		.clear-btn {
+			background: #ff0e0e;
 			padding: 10px;
-			background-color: var(--primary-color);
-			font-weight: 600;
-			text-transform: capitalize;
-			border: 0;
 			outline: 0;
-			transition-duration: .3s;
-			width: 200px;
-
-			&:hover {
-				font-weight: 900;
-			}
+			transition: 0.5s;
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+			border: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
-		h1 {
-			font-weight: 600;
-			margin: 30px 0 50px 0;
-			text-transform: uppercase;
+		.chekout-btn {
+			background: var(--primary-color);
+			padding: 10px;
+			outline: 0;
+			transition: 0.5s;
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+			border: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			box-shadow: 0px 4px 5px 0px #a8acb010;
 		}
-	}
-
-	hr {
-		border: .5px solid #E5E5E5;
-		width: 100%;
 	}
 }

@@ -1,19 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-	removeFromCart,
-	adjustQty,
-	loadCurrentItems,
-} from "../../Redux/products/Actions";
+import { removeFromCart, adjustQty } from "../../Redux/products/Actions";
 import remove from "../../Assets/remove.svg";
 import "../../Styles/CartItem.scss";
-
 class CartItem extends Component {
-	// componentDidUpdate () {
-	// 	this.props.adjustQty(this.cart.item.id);
-	// }
+	constructor(props) {
+		super(props)
+		this.state = {
+			qty: props.data.qty,
+		};
+	}
+	increaseQty = e => {
+		let currentQty = this.state.qty;
+		this.setState({ qty: currentQty + 1 });
+		this.props.adjustQty(this.props.data.id, currentQty)
+	};
+	decreaseQty = e => {
+		let currentQty = this.state.qty;
+		this.setState({ qty: currentQty - 1 });
+		this.props.adjustQty(this.props.data.id, currentQty)
+	};
 	render () {
-		console.log(this.props.data);
 		return (
 			<div className="cart-item">
 				<div className="item-data">
@@ -25,17 +32,22 @@ class CartItem extends Component {
 						{this.props.data.attributes.items.map((item, index) => {
 							return (
 								<div key={index} className="attributes-value">
-									{item.displayValue}
+									{item.value}
 								</div>
 							);
 						})}
 					</div>
 				</div>
 				<div className="qty-btns">
-					<div onClick={() => this.props.adjustQty(this.props.data.qty + 1)}>
+					<button onClick={this.increaseQty}>
 						+
-					</div>
-					<span>{this.props.data.qty}</span>
+					</button>
+					<input
+						className="counter-output"
+						readOnly
+						onChange={this.qtyChange}
+						value={this.state.qty}
+					/>
 					{this.props.data.qty === 1 ? (
 						<img
 							src={remove}
@@ -45,9 +57,9 @@ class CartItem extends Component {
 							onClick={() => this.props.removeFromCart(this.props.data.id)}
 						/>
 					) : (
-						<div onClick={() => this.props.adjustQty(this.props.data.qty - 1)}>
+						<button onClick={this.decreaseQty}>
 							-
-						</div>
+						</button>
 					)}
 				</div>
 				<div className="end">
@@ -75,7 +87,6 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		removeFromCart: (id) => dispatch(removeFromCart(id)),
 		adjustQty: (id, qty) => dispatch(adjustQty(id, qty)),
-		loadCurrentItems: (item) => dispatch(loadCurrentItems(item)),
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
