@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addToCart } from "../../Redux/products/Actions";
-import { loadCurrentItems } from "../../Redux/products/Actions";
+import { loadCurrentItems, addToCart } from "../../Redux/products/Actions";
 import { Link } from "react-router-dom";
 import cart from "../../Assets/cart-white.svg";
 import "../../Styles/Product.scss";
@@ -39,17 +38,21 @@ class Product extends Component {
 													src={product.gallery[0]}
 													alt={product.id}
 												/>
-												<div
-													className="add-to-cart"
-													onClick={() => this.props.addToCart(product.id)}
-												>
-													<img
-														width="25"
-														height="25"
-														src={cart}
-														alt={product.id}
-													/>
-												</div>
+												{
+													product.inStock ? (
+														<div
+															className="add-to-cart"
+															onClick={() => this.props.addToCart(product.id)}
+														>
+															<img
+																width="25"
+																height="25"
+																src={cart}
+																alt={product.id}
+															/>
+														</div>
+													) : null
+												}
 											</div>
 											<div className="product-name">
 												<Link to={`/product/${product.id}`}>
@@ -90,17 +93,21 @@ class Product extends Component {
 												src={product.gallery[0]}
 												alt={product.id}
 											/>
-											<div
-												className="add-to-cart"
-												onClick={() => this.props.addToCart(product.id)}
-											>
-												<img
-													width="25"
-													height="25"
-													src={cart}
-													alt={product.id}
-												/>
-											</div>
+											{
+												product.inStock ? (
+													<div
+														className="add-to-cart"
+														onClick={() => this.props.addToCart(product.id)}
+													>
+														<img
+															width="25"
+															height="25"
+															src={cart}
+															alt={product.id}
+														/>
+													</div>
+												) : null
+											}
 										</div>
 										<div className="product-name">
 											<Link to={`/product/${product.id}`}>
@@ -122,14 +129,12 @@ class Product extends Component {
 		);
 	}
 }
-
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addToCart: (id) => dispatch(addToCart(id)),
 		loadCurrentItems: (item) => dispatch(loadCurrentItems(item)),
 	};
 };
-
 const mapStateToProps = (state) => {
 	return {
 		currentItem: state.products.currentItem,
@@ -138,5 +143,4 @@ const mapStateToProps = (state) => {
 		category: state.products.category,
 	};
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

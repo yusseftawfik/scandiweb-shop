@@ -2,13 +2,45 @@
 import React from "react";
 import { connect } from "react-redux";
 import Navbar from "../Navbar/Navbar";
-import useProducts from "../../Hooks/useProducts";
 import Product from "./Product";
 import Spinner from "./Spinner";
 import "../../Styles/PLP.scss";
+import { useQuery, gql } from "@apollo/client";
+import { setData } from '../../Redux/products/Actions';
 
-const PLP = ({ category }) => {
-	const { data, error, loading } = useProducts();
+const PRODDUCT_QUERY = gql`
+{
+    category {
+    products {
+        id
+        name
+        inStock
+        gallery
+        category
+        brand
+        description
+        prices {
+        	amount
+        	currency {
+            	label
+            	symbol
+        }
+        }
+        attributes {
+        	name
+        	items {
+            	displayValue
+        }
+        }
+    }
+    }
+}
+`;
+
+const PLP = ({ category, setData }) => {
+	const { data, error, loading } = useQuery(PRODDUCT_QUERY, {
+		onCompleted: (data) => setData(data.category.products)
+	});
 	return (
 		<>
 			<Navbar />
@@ -34,4 +66,9 @@ const mapStateToProps = (state) => {
 		category: state.products.category,
 	};
 };
-export default connect(mapStateToProps)(PLP);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setData: (data) => dispatch(setData(data))
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(PLP);

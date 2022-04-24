@@ -1,4 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
+import { connect } from 'react-redux';
+import { setData } from '../Redux/products/Actions';
 
 const PRODDUCT_QUERY = gql`
 {
@@ -28,12 +30,19 @@ const PRODDUCT_QUERY = gql`
     }
 }
 `;
-const useProducts = () => {
-    const { data, error, loading } = useQuery(PRODDUCT_QUERY);
+const useProducts = ({ setData }) => {
+    const { data, error, loading } = useQuery(PRODDUCT_QUERY, {
+        onCompleted: (data) => setData(data.category.products)
+    });
     return {
         data,
         error,
         loading,
     };
 };
-export default useProducts;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setData: (data) => dispatch(setData(data))
+    }
+}
+export default connect(null, mapDispatchToProps)(useProducts);

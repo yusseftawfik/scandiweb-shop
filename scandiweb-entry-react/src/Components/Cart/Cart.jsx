@@ -13,23 +13,23 @@ class Cart extends Component {
 			cartTotalPrice: 0,
 		}
 	}
-	componentDidMount () {
-		this.setPrice();
-	}
-	componentWillReceiveProps (previousState) {
-		if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
-			this.setPrice()
-		}
-	}
-	setPrice () {
-		let price = 0;
-		this.props.cart.forEach(item => {
-			price += item.price.amount * item.qty
-		})
-		this.setState({
-			cartTotalPrice: Math.ceil(price)
-		})
-	}
+	// componentDidMount () {
+	// 	this.setPrice();
+	// }
+	// componentWillReceiveProps (previousState) {
+	// 	if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
+	// 		this.setPrice()
+	// 	}
+	// }
+	// setPrice () {
+	// 	let price = 0;
+	// 	this.props.cart.forEach(item => {
+	// 		price += item.price.amount * item.qty
+	// 	})
+	// 	this.setState({
+	// 		cartTotalPrice: Math.ceil(price)
+	// 	})
+	// }
 	clearCart = () => {
 		localStorage.removeItem('Cart');
 		window.location.reload()
@@ -69,9 +69,9 @@ class Cart extends Component {
 						</div>
 						<div>
 							<span>Total Price:</span>
-							<span>
+							{/* <span>
 								{this.props.currency}{" "}{this.state.cartTotalPrice}
-							</span>
+							</span> */}
 						</div>
 						<button className='chekout-btn' onClick={this.clearCart}>
 							<img

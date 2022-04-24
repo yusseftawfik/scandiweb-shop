@@ -1,5 +1,23 @@
 import * as actionTypes from './Types';
 
+export const setData = (data) => {
+	return {
+		type: actionTypes.SET_DATA,
+		payload: {
+			data: data
+		}
+	}
+}
+
+export const setCategory = (value) => {
+	return {
+		type: actionTypes.SET_CATEGORY,
+		payload: {
+			data: value
+		}
+	}
+}
+
 export const addToCart = (itemID) => {
 	return {
 		type: actionTypes.ADD_TO_CART,
@@ -24,6 +42,16 @@ export const adjustQty = (itemID, value) => {
 		payload: {
 			id: itemID,
 			qty: value
+		}
+	}
+}
+
+export const selectAttribute = (itemID, value) => {
+	return {
+		type: actionTypes.ADJUST_ATTRIBUTES,
+		payload: {
+			id: itemID,
+			attribute: value
 		}
 	}
 }

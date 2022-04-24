@@ -11,16 +11,18 @@ const Database = new HttpLink({
   uri: "http://localhost:4000/graphql",
 });
 
+const cache = new InMemoryCache();
+
 const client = new ApolloClient({
   link: Database,
-  cache: new InMemoryCache()
+  cache
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <ApolloProvider client={client}>
+  <ApolloProvider client={client}>
+    <Provider store={store}>
       <App />
-    </ApolloProvider>
-  </Provider>
+    </Provider>
+  </ApolloProvider>
 );

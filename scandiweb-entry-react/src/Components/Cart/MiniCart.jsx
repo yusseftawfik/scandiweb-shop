@@ -10,23 +10,23 @@ class MiniCart extends Component {
 			cartTotalPrice: 0,
 		}
 	}
-	componentDidMount () {
-		this.setPrice();
-	}
-	componentWillReceiveProps (previousState) {
-		if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
-			this.setPrice()
-		}
-	}
-	setPrice () {
-		let price = 0;
-		this.props.cart.forEach(item => {
-			price += item.price.amount * item.qty
-		})
-		this.setState({
-			cartTotalPrice: Math.ceil(price)
-		})
-	}
+	// componentDidMount () {
+	// 	this.setPrice();
+	// }
+	// componentWillReceiveProps (previousState) {
+	// 	if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
+	// 		this.setPrice()
+	// 	}
+	// }
+	// setPrice () {
+	// 	let price = 0;
+	// 	this.props.cart.forEach(item => {
+	// 		price += item.price.amount * item.qty
+	// 	})
+	// 	this.setState({
+	// 		cartTotalPrice: Math.ceil(price)
+	// 	})
+	// }
 	render () {
 		return (
 			<div className='mini-cart'>
