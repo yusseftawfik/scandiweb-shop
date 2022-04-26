@@ -1,31 +1,32 @@
 .mini-cart {
 	min-height: 250px;
 	max-height: 550px;
-	max-width: 300px;
+	max-width: 350px;
+	min-width: 350px;
 	box-shadow: 0px 4px 35px 0px #A8ACB030;
 	position: absolute;
 	right: 0;
-	top: 48px;
+	top: 38px;
 	z-index: 1000;
 	overflow-x: scroll;
-	padding: 20px;
+	padding: 20px 10px 0px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	gap: 50px;
+	gap: 25px;
 	background: #fff;
 
 	&-summary {
-		width: inherit;
+		width: -webkit-fill-available;
 		position: sticky;
 		bottom: 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		align-items: center;
-		gap: 30px;
-		background: rgba(255, 255, 255, 0.95);
+		// align-items: center;
+		gap: 20px;
+		background: #fff;
 		padding: 20px 5px;
 	}
 
@@ -48,9 +49,10 @@
 
 	.btn-container {
 		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-		gap: 10px;
+		justify-content: space-between;
+		// width: ;
+		// align-items: center;
+		// gap: 10px;
 
 		div {
 			display: flex;

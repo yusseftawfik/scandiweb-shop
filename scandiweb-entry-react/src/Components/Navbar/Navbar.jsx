@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { changeCategory } from "../../Redux/products/Actions";
+import { graphql } from "@apollo/client/react/hoc";
+import { gql } from "@apollo/client";
 import { Link } from "react-router-dom";
 import cart from "../../Assets/cart.svg";
 import arrowdown from "../../Assets/arrowdown.svg";
@@ -9,16 +11,13 @@ import logo from "../../Assets/logo.svg";
 import CurrencyList from "./CurrencyList";
 import MiniCart from "../Cart/MiniCart";
 import "../../Styles/Navbar.scss";
-import { graphql } from '@apollo/client/react/hoc';
-import { gql } from "@apollo/client";
-
 
 const CATEGOTY_QUERY = gql`
-    {
+  {
     categories {
-        name
-        }
+      name
     }
+  }
 `;
 
 class Navbar extends Component {
@@ -29,6 +28,9 @@ class Navbar extends Component {
 			openCurrency: false,
 			backdrop: false,
 		};
+	}
+	componentDidUpdate () {
+		localStorage.setItem("Category", JSON.stringify(this.props.category));
 	}
 	openCart = (e) => {
 		e.preventDefault();
@@ -45,40 +47,58 @@ class Navbar extends Component {
 			openCart: false,
 		});
 	};
-	closeCart = () => {
-		this.setState({
-			openCart: false,
-			backdrop: false,
-		});
-	};
+	// closeCart = () => {
+	// 	this.setState({
+	// 		openCart: false,
+	// 		backdrop: false,
+	// 	});
+	// };
 	closeCurrency = () => {
 		this.setState({ openCurrency: false });
 	};
+	selectedCategory = {
+		color: "var(--primary-color)",
+		fontWeight: "700",
+		borderBottomColor: 'var(--primary-color)',
+		borderBottomWidth: 2,
+		transitionDuration: ".3s",
+	};
 	render () {
-		console.log(this.props)
-		// onClick = { element => this.props.changeCategory(element.name) }
 		return (
 			<>
 				<div className="nav-bar">
 					<div className="categories">
-						{
-							this.props.data.loading ?
-								null
-								:
-								this.props.data.categories.map((item) => {
-									return (
-										item.name === 'all' ?
-											(<span onClick={() => { this.props.changeCategory('') }}>
-												{item.name}
-											</span>) :
-											(<>
-												<span onClick={() => { this.props.changeCategory(item.name) }}>
-													{item.name}
-												</span>
-											</>)
-									)
-								})
-						}
+						{this.props.data.loading
+							? null
+							: this.props.data.categories.map((item, index) => {
+								return item.name === "all" ? (
+									<span
+										style={
+											!this.props.category ? this.selectedCategory : null
+										}
+										key={index}
+										onClick={() => {
+											this.props.changeCategory("");
+										}}
+									>
+										{item.name}
+									</span>
+								) : (
+									<span
+										style={
+											this.props.category === item.name
+												? this.selectedCategory
+												: null
+										}
+										key={index}
+										onClick={() => {
+											this.props.changeCategory(item.name);
+										}}
+									>
+										{item.name}
+									</span>
+								);
+							})}
 					</div>
 					<div className="logo">
 						<Link to="/">
@@ -134,4 +154,6 @@ const mapDispatchToProps = (dispatch) => {
 		changeCategory: (name) => dispatch(changeCategory(name)),
 	};
 };
-export default graphql(CATEGOTY_QUERY)(connect(mapStateToProps, mapDispatchToProps)(Navbar));
+export default graphql(CATEGOTY_QUERY)(
+	connect(mapStateToProps, mapDispatchToProps)(Navbar)
+);

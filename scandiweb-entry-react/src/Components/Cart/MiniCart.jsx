@@ -10,23 +10,25 @@ class MiniCart extends Component {
 			cartTotalPrice: 0,
 		}
 	}
-	// componentDidMount () {
-	// 	this.setPrice();
-	// }
-	// componentWillReceiveProps (previousState) {
-	// 	if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
-	// 		this.setPrice()
-	// 	}
-	// }
-	// setPrice () {
-	// 	let price = 0;
-	// 	this.props.cart.forEach(item => {
-	// 		price += item.price.amount * item.qty
-	// 	})
-	// 	this.setState({
-	// 		cartTotalPrice: Math.ceil(price)
-	// 	})
-	// }
+	componentDidMount () {
+		this.setPrice();
+	}
+	componentWillReceiveProps (previousState) {
+		if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
+			this.setPrice()
+		}
+	}
+	setPrice () {
+		let price = 0;
+		let currentPrice;
+		this.props.cart.forEach(item => {
+			currentPrice = item.prices.find((item) => item.currency.label === this.props.currency);
+			price += currentPrice.amount * item.qty
+			this.setState({
+				cartTotalPrice: Math.ceil(price)
+			})
+		})
+	}
 	render () {
 		return (
 			<div className='mini-cart'>
@@ -34,7 +36,7 @@ class MiniCart extends Component {
 					this.props.cart.map((data, index) => {
 						return (
 							<div key={index} style={{ width: '-webkit-fill-available' }}>
-								<CartItem data={data} />
+								<CartItem data={data} key={index} />
 							</div>
 						)
 					})
@@ -49,16 +51,16 @@ class MiniCart extends Component {
 						</span>
 					</div>
 					<div className='btn-container'>
-						<Link to='/cart'>
-							<div>
-								view bag
-							</div>
-						</Link>
-						<Link to='/checkout'>
-							<div className='checkout-btn'>
+						<div>
+							<Link to='/cart'>
+								vew bag
+							</Link>
+						</div>
+						<div className='checkout-btn'>
+							<Link to='/checkout'>
 								checkout
-							</div>
-						</Link>
+							</Link>
+						</div>
 					</div>
 				</div>
 			</div>

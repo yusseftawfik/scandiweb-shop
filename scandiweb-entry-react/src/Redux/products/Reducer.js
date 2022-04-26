@@ -1,55 +1,5 @@
 import * as actionTypes from "./Types";
 
-// const products = [
-// 	{
-// 		id: "huarache-x-stussy-le",
-// 		name: "Nike Air Huarache Le",
-// 		gallery: [
-// 			"https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_2_720x.jpg?v=1612816087",
-// 			"https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_1_720x.jpg?v=1612816087"
-// 		],
-// 		price: {
-// 			amount: 144.69,
-// 			currency: {
-// 				label: "USD",
-// 				symbol: "$"
-// 			}
-// 		},
-// 		attributes: {
-// 			name: "Size",
-// 			items: [
-// 				{ displayValue: '40', value: '40' },
-// 				{ displayValue: '41', value: '41' },
-// 				{ displayValue: '42', value: '42' },
-// 				{ displayValue: '43', value: '43' }
-// 			]
-// 		}
-// 	},
-// 	{
-// 		id: "jacket-canada-goosee",
-// 		name: "Jacket",
-// 		gallery: [
-// 			"https://images.canadagoose.com/image/upload/w_480,c_scale,f_auto,q_auto:best/v1576016105/product-image/2409L_61.jpg",
-// 			"https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_1_720x.jpg?v=1612816087"
-// 		],
-// 		price: {
-// 			amount: 200,
-// 			currency: {
-// 				label: "USD",
-// 				symbol: "$"
-// 			}
-// 		},
-// 		attributes: {
-// 			name: "Size",
-// 			items: [
-// 				{ displayValue: 'M', value: '40' },
-// 				{ displayValue: 'L', value: '41' },
-// 			]
-// 		}
-// 	}
-// ];
-// const category = "";
-
 const INITIAL_STATE = {
 	data: [],
 	currentItem: null,
@@ -80,7 +30,7 @@ const productReducer = (state = INITIAL_STATE, action) => {
 				cart: inCart
 					? state.cart.map((item) =>
 						item.id === action.payload.id
-							? { ...item, qty: item.qty + 1 }
+							? { ...item, qty: item.qty + 1, selectedAttributes: {} }
 							: item
 					)
 					: [...state.cart, { ...item, qty: 1 }],
@@ -104,7 +54,10 @@ const productReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				cart: state.cart.map((item) =>
 					item.id === action.payload.id
-						? { ...item, attribute: action.payload.attribute }
+						? {
+							...item,
+							attributes: [this.attribute, this.value] = [action.payload.name, action.payload.value]
+						}
 						: item
 				),
 			};

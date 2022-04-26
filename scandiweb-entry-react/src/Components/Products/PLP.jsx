@@ -28,8 +28,10 @@ const PRODDUCT_QUERY = gql`
         }
         attributes {
         	name
+			type
         	items {
             	displayValue
+				value
         }
         }
     }

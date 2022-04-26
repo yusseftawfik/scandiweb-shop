@@ -10,23 +10,25 @@ class PDP extends Component {
 		index: 0,
 	};
 	render () {
-		console.log(this.props.currentItem.attributes)
 		return (
 			<>
 				<Navbar />
 				<div className="pdp">
 					<div className="gallery">
-						<div className="mini">
-							{this.props.currentItem.gallery.map((item, index) => (
-								<img
-									src={item}
-									height="auto"
-									width="50"
-									alt="product"
-									onClick={() => this.setState({ index: index })}
-								/>
-							))}
-						</div>
+						{
+							this.props.currentItem.gallery.length === 1 ? null :
+								<div className="mini">
+									{this.props.currentItem.gallery.map((item, index) => (
+										<img
+											src={item}
+											height="auto"
+											width="50"
+											alt="product"
+											onClick={() => this.setState({ index: index })}
+										/>
+									))}
+								</div>
+						}
 						<div className="main">
 							<img
 								src={this.props.currentItem.gallery[this.state.index]}
@@ -44,47 +46,45 @@ class PDP extends Component {
 						<div className="product-attributes">
 							{
 								this.props.currentItem.attributes ?
-									this.props.currentItem.attributes.map((item, index) => {
+									this.props.currentItem.attributes.map((attribute, index) => {
 										return (
 											<>
-												<span className="attribute-name">{item.name}</span>
-												<div key={index}>
-													{
-														item.items.map((item) => {
+												<span className='attribute-name'>{attribute.name}:</span>
+												<div className="item-data-attributes-section" key={index}>
+													{attribute.type === "swatch" ?
+														<div className="item-data-attributes-section" key={index}>
+															{
+																attribute.items.map((item, index) => {
+																	return (
+																		<div key={index} className="attribute-color" style={{ background: `${item.value}` }}>
+																		</div>
+																	)
+																})
+															}
+														</div>
+														: attribute.items.map((item) => {
 															return (
-																item.displayValue[0] ?
-																	(<>
-																		<label htmlFor={`attributes-${index}`}>
-																			{item.displayValue}
-																			<input
-																				checked
-																				type='radio'
-																				name={`attributes-${index}`}
-																				value={item.displayValue}
-																				className="attributes-value"
-																				onClick={() => this.props.selectAttribute(
-																					this.props.currentItem.attributes.items.value,
-																					this.props.currentItem.id
-																				)} />
-																		</label>
-																	</>) :
-																	(<>
-																		<label htmlFor={`attributes-${index}`}>
-																			{item.displayValue}
-																			<input
-																				type='radio'
-																				name={`attributes-${index}`}
-																				value={item.displayValue}
-																				className="attributes-value"
-																				onClick={() => this.props.selectAttribute(
-																					this.props.currentItem.attributes.items.value,
-																					this.props.currentItem.id
-																				)} />
-																		</label>
-																	</>)
+																<>
+																	<label htmlFor={`attributes-${attribute.name}`}>
+																		{item.displayValue}
+																		<input
+																			defaultChecked={item.displayValue[0] ? true : false}
+																			type="radio"
+																			name={`attributes-${attribute.name}`}
+																			value={item.displayValue}
+																			className="attributes-value"
+																			onClick={() =>
+																				this.props.selectAttribute(
+																					this.props.currentItem.id,
+																					attribute.name,
+																					item.value
+																				)
+																			}
+																		/>
+																	</label>
+																</>
 															)
-														}
-														)
+														})
 													}
 												</div>
 											</>
@@ -93,11 +93,19 @@ class PDP extends Component {
 							}
 						</div>
 						<div className="product-price">
-							{/* <span>price:</span>
-							<div>
-								<span>{this.props.currentItem.prices.currency.symbol}</span>
-								<span>{this.props.currentItem.prices.amount}</span>
-							</div> */}
+							{
+								this.props.currentItem.prices.map((item, index) => {
+									return (
+										item.currency.label === this.props.currency ?
+											(<span className='item-price' key={index}>
+												{item.currency.symbol}
+												{' '}
+												{item.amount}
+											</span>)
+											: null
+									)
+								})
+							}
 						</div>
 						<div>
 							{this.props.currentItem.inStock ? (
@@ -124,7 +132,7 @@ class PDP extends Component {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addToCart: (id) => dispatch(addToCart(id)),
-		selectAttribute: (id, value) => dispatch(selectAttribute(id, value)),
+		selectAttribute: (id, attribute, value) => dispatch(selectAttribute(id, attribute, value)),
 	};
 };
 const mapStateToProps = (state) => {

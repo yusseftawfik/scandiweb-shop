@@ -46,12 +46,14 @@ export const adjustQty = (itemID, value) => {
 	}
 }
 
-export const selectAttribute = (itemID, value) => {
+export const selectAttribute = (itemID, attribute, value) => {
 	return {
 		type: actionTypes.ADJUST_ATTRIBUTES,
 		payload: {
 			id: itemID,
-			attribute: value
+			selectedAttributes: {
+				
+			}
 		}
 	}
 }

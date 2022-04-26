@@ -12,82 +12,79 @@ class CartItem extends Component {
 	}
 	increaseQty = (e) => {
 		let currentQty = this.state.qty;
-		this.setState({ qty: currentQty + 1 });
 		this.props.adjustQty(this.props.data.id, currentQty);
+		this.setState({ qty: currentQty + 1 });
 	};
 	decreaseQty = (e) => {
 		let currentQty = this.state.qty;
-		this.setState({ qty: currentQty - 1 });
 		this.props.adjustQty(this.props.data.id, currentQty);
+		this.setState({ qty: currentQty - 1 });
 	};
 	render () {
-		let price = 0;
 		return (
 			<div className="cart-item">
 				<div className="item-data">
-					<span>{this.props.data.name}</span>
-					{/* {
-						price = this.props.data.prices.find((item) => item.currency.label === this.props.currency)
-						// item.currency.label === this.props.currency)
-						// ?
-						// 	<>
-						// 		<span>{price.currency.symbol}</span>
-						// 		<span>{price.amount}</span> 
-						// 	</>
-						// 	:
-						// 	null
-					}
-					{
-						console.log('return', price)
-					} */}
+					<span className="item-brand">{this.props.data.brand}</span>
+					<span className="item-name">{this.props.data.name}</span>
+					{this.props.data.prices.map((item, index) => {
+						return item.currency.label === this.props.currency ? (
+							<span className="item-price" key={index}>
+								{item.currency.symbol} {item.amount}
+							</span>
+						) : null;
+					})}
 					<div className="item-data-attributes">
 						{this.props.data.attributes
-							? this.props.data.attributes.map((item, index) => {
+							? this.props.data.attributes.map((attribute, index) => {
 								return (
 									<>
-										<div key={index}>
-											{item.items.map((item) => {
-												return item.displayValue[0] ? (
-													<>
-														<label htmlFor={`attributes-${index}`}>
-															{item.displayValue}
-															<input
-																defaultChecked
-																type="radio"
-																name={`attributes-${index}`}
-																value={item.displayValue}
-																className="attributes-value"
-																onClick={() =>
-																	this.props.selectAttribute(
-																		this.props.currentItem.attributes.items
-																			.value,
-																		this.props.currentItem.id
-																	)
-																}
-															/>
-														</label>
-													</>
-												) : (
-													<>
-														<label htmlFor={`attributes-${index}`}>
-															{item.displayValue}
-															<input
-																type="radio"
-																name={`attributes-${index}`}
-																value={item.displayValue}
-																className="attributes-value"
-																onClick={() =>
-																	this.props.selectAttribute(
-																		this.props.currentItem.attributes.items
-																			.value,
-																		this.props.currentItem.id
-																	)
-																}
-															/>
-														</label>
-													</>
-												);
-											})}
+										<span className="attribute-name">{attribute.name}</span>
+										<div className="item-data-attributes-section" key={index}>
+											{attribute.type === "swatch" ? (
+												<div
+													className="item-data-attributes-section"
+													key={index}
+												>
+													{attribute.items.map((item, index) => {
+														return (
+															<div
+																key={index}
+																className="attribute-color"
+																style={{ background: `${item.value}` }}
+															>
+															</div>
+														);
+													})}
+												</div>
+											) : (
+												attribute.items.map((item) => {
+													return (
+														<div key={index}>
+															<label
+																htmlFor={`${this.props.data.name}-${attribute.name}-${index}`}
+															>
+																{item.displayValue}
+																<input
+																	defaultChecked={
+																		item.displayValue[0] ? true : false
+																	}
+																	type="radio"
+																	name={`${this.props.data.name}-${attribute.name}-${index}`}
+																	value={item.displayValue}
+																	className="attributes-value"
+																	onClick={() =>
+																		this.props.selectAttribute(
+																			this.props.currentItem.id,
+																			attribute.name,
+																			item.value
+																		)
+																	}
+																/>
+															</label>
+														</div>
+													);
+												})
+											)}
 										</div>
 									</>
 								);
@@ -95,37 +92,38 @@ class CartItem extends Component {
 							: null}
 					</div>
 				</div>
-				<div className="qty-btns">
-					<button onClick={this.increaseQty}>+</button>
-					<input
-						className="counter-output"
-						readOnly
-						onChange={this.qtyChange}
-						value={this.state.qty}
-					/>
-					{this.props.data.qty === 1 ? (
-						<img
-							src={remove}
-							alt=""
-							width="25"
-							height="25"
-							onClick={() => this.props.removeFromCart(this.props.data.id)}
+				<div className="right">
+					<div className="qty-btns">
+						<button onClick={this.increaseQty}>+</button>
+						<input
+							className="counter-output"
+							readOnly
+							min="1"
+							onChange={this.qtyChange}
+							value={this.state.qty}
 						/>
-					) : (
-						<button onClick={this.decreaseQty}>-</button>
-					)}
-				</div>
-				<div className="end">
-					<div className="item-image">
+						{this.props.data.qty === 1 ? (
+							<img
+								src={remove}
+								alt=""
+								width="27"
+								height="27"
+								onClick={() => this.props.removeFromCart(this.props.data.id)}
+							/>
+						) : (
+							<button onClick={this.decreaseQty}>-</button>
+						)}
+					</div>
+					<div className="image-container">
 						<img
 							src={this.props.data.gallery[0]}
 							alt={this.props.data.name}
-							height="100"
-							width="100"
+							width="120"
+							height="auto"
 						/>
 					</div>
 				</div>
-			</div >
+			</div>
 		);
 	}
 }
@@ -143,7 +141,3 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
-
-// (<>
-
-// </>) : null
