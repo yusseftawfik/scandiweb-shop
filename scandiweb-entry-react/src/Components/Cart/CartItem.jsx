@@ -25,6 +25,8 @@ class CartItem extends Component {
 		this.setState({ qty: currentQty - 1 });
 	};
 	render () {
+		let selectedValue;
+		selectedValue = this.props.data.selectedAttributes.map(item => Object.values(item))
 		return (
 			<div className="cart-item">
 				<div className="item-data">
@@ -56,16 +58,14 @@ class CartItem extends Component {
 														return (
 															<div className="button-color">
 																<input
-																	defaultChecked={
-																		item.value[0] ? true : false
-																	}
+																	defaultChecked={item.value === selectedValue ? true : false}
 																	type="radio"
 																	name={`${this.props.data.name}-${attribute.name}-${index}`}
 																	value={item.value}
 																	className="attributes-value"
 																	onClick={() =>
 																		this.props.selectAttribute(
-																			this.props.currentItem.id,
+																			this.props.data.id,
 																			attribute.name,
 																			item.value
 																		)
@@ -86,7 +86,7 @@ class CartItem extends Component {
 													return (
 														<div className="button" key={index2}>
 															<input
-																defaultChecked={item.value[0] ? true : false}
+																defaultChecked={item.value === selectedValue ? true : false}
 																type="radio"
 																name={`${this.props.data.name}-${attribute.name}-${index}`}
 																value={item.value}

@@ -46,15 +46,12 @@ export const adjustQty = (itemID, value) => {
 	}
 }
 
-export const selectAttribute = (itemID, attribute, value) => {
+export const selectAttribute = (itemID, name, value) => {
 	return {
 		type: actionTypes.ADJUST_ATTRIBUTES,
-		payload: {
-			id: itemID,
-			selectedAttributes: {
-				attribute: [attribute, value]
-			}
-		}
+		id: itemID,
+		name: name,
+		value: value
 	}
 }
 
@@ -77,31 +74,3 @@ export const changeCategory = (name) => {
 		payload: name
 	}
 }
-
-// item: {
-// 	id: item.id,
-// 		name: item.name,
-// 			// inStock: item.inStock,
-// 			// gallery: item.gallery,
-// 			category: item.category,
-// 				brand: item.brand,
-// 					description: item.description,
-// 						price: item.price,
-// 				// prices: {
-// 				// 	amount: item.prices.amount,
-// 				// 	currency: {
-// 				// 		label: item.prices.currency.label,
-// 				// 		symbol: item.prices.currency.symbol,
-// 				// 	}
-// 				// },
-// 				// attributes: {
-// 				// 	id: item.attributes.id,
-// 				// 	name: item.attributes.name,
-// 				// 	type: item.attributes.type,
-// 				// 	items: {
-// 				// 		displayValue: item.attributes.items.displayValue,
-// 				// 		value: item.attributes.items.value,
-// 				// 		id: item.attributes.items.id,
-// 				// 	}
-// 				// }
-// 			}

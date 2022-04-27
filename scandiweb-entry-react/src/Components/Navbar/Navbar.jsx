@@ -47,12 +47,12 @@ class Navbar extends Component {
 			openCart: false,
 		});
 	};
-	// closeCart = () => {
-	// 	this.setState({
-	// 		openCart: false,
-	// 		backdrop: false,
-	// 	});
-	// };
+	closeCart = () => {
+		this.setState({
+			openCart: false,
+			backdrop: false,
+		});
+	};
 	closeCurrency = () => {
 		this.setState({ openCurrency: false });
 	};

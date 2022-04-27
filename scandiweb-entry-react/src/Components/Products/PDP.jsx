@@ -6,10 +6,15 @@ import { addToCart, selectAttribute } from "../../Redux/products/Actions";
 import "../../Styles/PDP.scss";
 
 class PDP extends Component {
-	state = {
-		index: 0,
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			index: 0,
+		};
+	}
 	render () {
+		let selectedValue;
+		selectedValue = this.props.currentItem.selectedAttributes?.map(item => Object.values(item))
 		return (
 			<>
 				<Navbar />
@@ -47,9 +52,7 @@ class PDP extends Component {
 								? this.props.currentItem.attributes.map((attribute, index) => {
 									return (
 										<>
-											<div className="attribute-name">
-												{attribute.name}:
-											</div>
+											<div className="attribute-name">{attribute.name}:</div>
 											<div
 												className="item-data-attributes-section"
 												key={index}
@@ -63,9 +66,7 @@ class PDP extends Component {
 															return (
 																<div className="button-color">
 																	<input
-																		defaultChecked={
-																			item.value[0] ? true : false
-																		}
+																		defaultChecked={item.value === selectedValue ? true : false}
 																		type="radio"
 																		name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
 																		value={item.value}
@@ -83,8 +84,7 @@ class PDP extends Component {
 																		htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
 																		className="attribute-color"
 																		style={{ background: `${item.value}` }}
-																	>
-																	</label>
+																	></label>
 																</div>
 															);
 														})}
@@ -94,9 +94,7 @@ class PDP extends Component {
 														return (
 															<div className="button" key={index2}>
 																<input
-																	defaultChecked={
-																		item.value[0] ? true : false
-																	}
+																	defaultChecked={item.value === selectedValue ? true : false}
 																	type="radio"
 																	name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
 																	value={item.value}
