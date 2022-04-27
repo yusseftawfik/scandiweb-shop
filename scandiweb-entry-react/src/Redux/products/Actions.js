@@ -52,7 +52,7 @@ export const selectAttribute = (itemID, attribute, value) => {
 		payload: {
 			id: itemID,
 			selectedAttributes: {
-				
+				attribute: [attribute, value]
 			}
 		}
 	}

@@ -30,7 +30,7 @@ const productReducer = (state = INITIAL_STATE, action) => {
 				cart: inCart
 					? state.cart.map((item) =>
 						item.id === action.payload.id
-							? { ...item, qty: item.qty + 1, selectedAttributes: {} }
+							? { ...item, qty: item.qty + 1 }
 							: item
 					)
 					: [...state.cart, { ...item, qty: 1 }],
@@ -52,14 +52,7 @@ const productReducer = (state = INITIAL_STATE, action) => {
 		case actionTypes.ADJUST_ATTRIBUTES:
 			return {
 				...state,
-				cart: state.cart.map((item) =>
-					item.id === action.payload.id
-						? {
-							...item,
-							attributes: [this.attribute, this.value] = [action.payload.name, action.payload.value]
-						}
-						: item
-				),
+				// cart: state.cart.map((product) => product.id === action.payload.id)
 			};
 		case actionTypes.LOAD_CURRENT_ITEMS:
 			return {

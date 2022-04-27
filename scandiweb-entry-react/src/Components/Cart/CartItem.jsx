@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { removeFromCart, adjustQty } from "../../Redux/products/Actions";
+import {
+	removeFromCart,
+	adjustQty,
+	selectAttribute,
+} from "../../Redux/products/Actions";
 import remove from "../../Assets/remove.svg";
 import "../../Styles/CartItem.scss";
 class CartItem extends Component {
@@ -29,7 +33,10 @@ class CartItem extends Component {
 					{this.props.data.prices.map((item, index) => {
 						return item.currency.label === this.props.currency ? (
 							<span className="item-price" key={index}>
-								{item.currency.symbol} {item.amount}
+								{item.amount.toLocaleString("en-US", {
+									style: "currency",
+									currency: this.props.currency,
+								})}
 							</span>
 						) : null;
 					})}
@@ -38,39 +45,23 @@ class CartItem extends Component {
 							? this.props.data.attributes.map((attribute, index) => {
 								return (
 									<>
-										<span className="attribute-name">{attribute.name}</span>
+										<div className="attribute-name">{attribute.name}</div>
 										<div className="item-data-attributes-section" key={index}>
 											{attribute.type === "swatch" ? (
 												<div
-													className="item-data-attributes-section"
+													className="item-data-attributes-section-color"
 													key={index}
 												>
-													{attribute.items.map((item, index) => {
+													{attribute.items.map((item) => {
 														return (
-															<div
-																key={index}
-																className="attribute-color"
-																style={{ background: `${item.value}` }}
-															>
-															</div>
-														);
-													})}
-												</div>
-											) : (
-												attribute.items.map((item) => {
-													return (
-														<div key={index}>
-															<label
-																htmlFor={`${this.props.data.name}-${attribute.name}-${index}`}
-															>
-																{item.displayValue}
+															<div className="button-color">
 																<input
 																	defaultChecked={
-																		item.displayValue[0] ? true : false
+																		item.value[0] ? true : false
 																	}
 																	type="radio"
 																	name={`${this.props.data.name}-${attribute.name}-${index}`}
-																	value={item.displayValue}
+																	value={item.value}
 																	className="attributes-value"
 																	onClick={() =>
 																		this.props.selectAttribute(
@@ -80,6 +71,39 @@ class CartItem extends Component {
 																		)
 																	}
 																/>
+																<label
+																	key={index}
+																	htmlFor={`${this.props.data.name}-${attribute.name}-${index}`}
+																	className="attribute-color"
+																	style={{ background: `${item.value}` }}
+																></label>
+															</div>
+														);
+													})}
+												</div>
+											) : (
+												attribute.items.map((item, index2) => {
+													return (
+														<div className="button" key={index2}>
+															<input
+																defaultChecked={item.value[0] ? true : false}
+																type="radio"
+																name={`${this.props.data.name}-${attribute.name}-${index}`}
+																value={item.value}
+																className="attributes-value"
+																onClick={() =>
+																	this.props.selectAttribute(
+																		this.props.data.id,
+																		attribute.name,
+																		item.value
+																	)
+																}
+															/>
+															<label
+																className="attributes-label"
+																htmlFor={`${this.props.data.name}-${attribute.name}-${index}`}
+															>
+																{item.value}
 															</label>
 														</div>
 													);
@@ -100,7 +124,7 @@ class CartItem extends Component {
 							readOnly
 							min="1"
 							onChange={this.qtyChange}
-							value={this.state.qty}
+							value={this.props.data.qty}
 						/>
 						{this.props.data.qty === 1 ? (
 							<img
@@ -138,6 +162,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		removeFromCart: (id) => dispatch(removeFromCart(id)),
 		adjustQty: (id, qty) => dispatch(adjustQty(id, qty)),
+		selectAttribute: (id, attribute, value) =>
+			dispatch(selectAttribute(id, attribute, value)),
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

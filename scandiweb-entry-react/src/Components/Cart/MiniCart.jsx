@@ -47,7 +47,10 @@ class MiniCart extends Component {
 							Total
 						</span>
 						<span>
-							{this.props.currency}{" "}{this.state.cartTotalPrice}
+							{(this.state.cartTotalPrice).toLocaleString('en-US', {
+								style: 'currency',
+								currency: this.props.currency,
+							})}
 						</span>
 					</div>
 					<div className='btn-container'>

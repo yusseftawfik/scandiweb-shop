@@ -1,8 +1,8 @@
 .cart-item {
 	display: flex;
 	justify-content: space-between;
-	padding: 10px 10px;
-	height: 200px;
+	padding: 20px 10px;
+	height: fit-content;
 	box-shadow: 0px 4px 5px 0px #a8acb010;
 
 	.item-data {
@@ -37,6 +37,7 @@
 			flex-direction: column;
 			justify-content: space-between;
 			align-items: flex-start;
+			gap: 10px;
 
 			&-section {
 				display: flex;
@@ -44,33 +45,74 @@
 				align-items: center;
 				gap: 5px;
 
-				.attribute-color {
-					width: 15px;
-					height: 15px;
-					border: .1px solid #000;
+				&-color {
+					display: flex;
+					justify-content: flex-start;
+					gap: 5px;
+					align-items: center;
 
-					&:hover {
-						outline: 2px solid var(--primary-color);
-						outline-offset: 2px;
-						border: 0;
+					.button-color {
+						position: relative;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+
+						.attributes-value {
+							width: 100%;
+							height: 100%;
+							position: absolute;
+							top: 0;
+							opacity: 0;
+							cursor: pointer;
+						}
+
+						.attribute-color {
+							width: 15px;
+							height: 15px;
+							border: .1px solid #000;
+						}
+
+						input[type='radio']:checked + label {
+							outline: 2px solid var(--primary-color);
+							outline-offset: 1px;
+							border: 0;
+						}
 					}
 				}
 
-				label {
+				.button {
+					position: relative;
+					width: 40px;
+					height: 15px;
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					border: 1px solid #000;
-					width: 30px;
-					height: 30px;
-					font-size: 10px;
 
-					// &:hover {
-					// 	background: var(--primary-color);
-					// 	color: #fff;
-					// 	border: 1px solid var(--primary-color);
-					// 	transition-duration: .3s;
-					// }
+					.attributes-value {
+						width: 100%;
+						height: 100%;
+						position: absolute;
+						top: 0;
+						opacity: 0;
+						cursor: pointer;
+					}
+
+					.attributes-label {
+						width: 100%;
+						height: 100%;
+						border: #000 solid 1px;
+						background: #000;
+						color: #fff;
+						text-align: center;
+						padding: 5px;
+						font-size: 10px;
+					}
+
+					input[type='radio']:checked + label {
+						border: 1px solid #000;
+						background: #fff;
+						color: #000;
+					}
 				}
 			}
 		}
