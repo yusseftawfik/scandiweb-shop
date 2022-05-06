@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { changeCategory } from "../../Redux/products/Actions";
-import { graphql } from "@apollo/client/react/hoc";
-import { gql } from "@apollo/client";
 import { Link } from "react-router-dom";
+import withCategory from "../../HOC/withCategory";
 import cart from "../../Assets/cart.svg";
 import arrowdown from "../../Assets/arrowdown.svg";
 import arrowup from "../../Assets/arrowup.svg";
@@ -12,45 +11,30 @@ import CurrencyList from "./CurrencyList";
 import MiniCart from "../Cart/MiniCart";
 import "../../Styles/Navbar.scss";
 
-const CATEGOTY_QUERY = gql`
-  {
-    categories {
-      name
-    }
-  }
-`;
-
 class Navbar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			openCart: false,
 			openCurrency: false,
-			backdrop: false,
 		};
 	}
-	componentDidUpdate () {
+	componentDidUpdate (prevProps) {
 		localStorage.setItem("Category", JSON.stringify(this.props.category));
+		if (prevProps.currency !== this.props.currency) {
+			this.closeCurrency();
+		}
 	}
-	openCart = (e) => {
-		e.preventDefault();
+	handleCurrency = (currencyFromChildern) => {
 		this.setState({
-			openCart: true,
-			openCurrency: false,
-			backdrop: true,
-		});
-	};
-	openCurrency = (e) => {
-		e.preventDefault();
-		this.setState({
-			openCurrency: true,
+			openCurrency: currencyFromChildern,
 			openCart: false,
 		});
 	};
-	closeCart = () => {
+	handleCategory = (cartFromChildern) => {
 		this.setState({
-			openCart: false,
-			backdrop: false,
+			openCart: cartFromChildern,
+			openCurrency: false
 		});
 	};
 	closeCurrency = () => {
@@ -59,7 +43,7 @@ class Navbar extends Component {
 	selectedCategory = {
 		color: "var(--primary-color)",
 		fontWeight: "700",
-		borderBottomColor: 'var(--primary-color)',
+		borderBottomColor: "var(--primary-color)",
 		borderBottomWidth: 2,
 		transitionDuration: ".3s",
 	};
@@ -68,37 +52,43 @@ class Navbar extends Component {
 			<>
 				<div className="nav-bar">
 					<div className="categories">
-						{this.props.data.loading
-							? null
-							: this.props.data.categories.map((item, index) => {
-								return item.name === "all" ? (
-									<span
-										style={
-											!this.props.category ? this.selectedCategory : null
-										}
-										key={index}
-										onClick={() => {
-											this.props.changeCategory("");
-										}}
-									>
-										{item.name}
-									</span>
-								) : (
-									<span
-										style={
-											this.props.category === item.name
-												? this.selectedCategory
-												: null
-										}
-										key={index}
-										onClick={() => {
-											this.props.changeCategory(item.name);
-										}}
-									>
-										{item.name}
-									</span>
-								);
-							})}
+						{window.location.pathname.indexOf("/product/") === -1 ? (
+							this.props.data.loading ? null : (
+								this.props.data.categories.map((item, index) => {
+									return item.name === "all" ? (
+										<span
+											style={
+												!this.props.category ? this.selectedCategory : null
+											}
+											key={index}
+											onClick={() => {
+												this.props.changeCategory("");
+											}}
+										>
+											{item.name}
+										</span>
+									) : (
+										<span
+											style={
+												this.props.category === item.name
+													? this.selectedCategory
+													: null
+											}
+											key={index}
+											onClick={() => {
+												this.props.changeCategory(item.name);
+											}}
+										>
+											{item.name}
+										</span>
+									);
+								})
+							)
+						) : (
+							<span style={this.selectedCategory}>
+								{!this.props.category ? "All" : this.props.category}
+							</span>
+						)}
 					</div>
 					<div className="logo">
 						<Link to="/">
@@ -106,11 +96,7 @@ class Navbar extends Component {
 						</Link>
 					</div>
 					<div className="buttons">
-						<button
-							className="currency"
-							onMouseEnter={this.openCurrency}
-							onBlur={this.closeCurrency}
-						>
+						<button className="currency" onMouseEnter={this.handleCurrency}>
 							<span>$</span>
 							<img
 								src={this.state.openCurrency ? arrowup : arrowdown}
@@ -118,25 +104,26 @@ class Navbar extends Component {
 								width="10"
 								height="10"
 							/>
-							{this.state.openCurrency && <CurrencyList />}
 						</button>
+						{this.state.openCurrency && (
+							<CurrencyList handleCurrency={this.handleCurrency} />
+						)}
 						<button
 							disabled={this.props.cart.length === 0 ? "disabled" : null}
 							className="cart-btn"
-							onMouseEnter={this.openCart}
-							onBlur={this.closeCart}
+							onMouseEnter={this.handleCategory}
 						>
 							{this.props.cart.length > 0 ? (
 								<div className="cart-counter">{this.props.cart.length}</div>
 							) : null}
 							<img src={cart} alt="cart" width="20" height="auto" />
-							{this.state.openCart && (
-								<>
-									<MiniCart />
-									<div className="backdrop"></div>
-								</>
-							)}
 						</button>
+						{this.state.openCart && (
+							<>
+								<MiniCart handleCategory={this.handleCategory} />
+								<div className="backdrop"></div>
+							</>
+						)}
 					</div>
 				</div>
 			</>
@@ -147,6 +134,7 @@ const mapStateToProps = (state) => {
 	return {
 		cart: state.products.cart,
 		category: state.products.category,
+		currency: state.products.currency,
 	};
 };
 const mapDispatchToProps = (dispatch) => {
@@ -154,6 +142,6 @@ const mapDispatchToProps = (dispatch) => {
 		changeCategory: (name) => dispatch(changeCategory(name)),
 	};
 };
-export default graphql(CATEGOTY_QUERY)(
+export default withCategory(
 	connect(mapStateToProps, mapDispatchToProps)(Navbar)
 );

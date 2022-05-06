@@ -8,30 +8,46 @@ class MiniCart extends Component {
 		super(props);
 		this.state = {
 			cartTotalPrice: 0,
+			cartToggle: true
 		}
+		this.ctg = React.createRef();
+		this.outsideCategory = this.outsideCategory.bind(this);
 	}
 	componentDidMount () {
 		this.setPrice();
+		document.addEventListener("mousedown", this.outsideCategory);
+	}
+	componentWillUnmount () {
+		document.removeEventListener("mousedown", this.outsideCategory);
 	}
 	componentWillReceiveProps (previousState) {
 		if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
 			this.setPrice()
 		}
 	}
+	outsideCategory (event) {
+		if (this.ctg && !this.ctg.current.contains(event.target)) {
+			this.cartToggle();
+		}
+	}
+	cartToggle = () => {
+		this.props.handleCategory(!this.state.cartToggle);
+	}
+
 	setPrice () {
 		let price = 0;
-		let currentPrice;
+		let currentPrice = 0;
 		this.props.cart.forEach(item => {
 			currentPrice = item.prices.find((item) => item.currency.label === this.props.currency);
 			price += currentPrice.amount * item.qty
-			this.setState({
-				cartTotalPrice: Math.ceil(price)
+			this.setState(() => {
+				return { cartTotalPrice: Math.ceil(price) }
 			})
 		})
 	}
 	render () {
 		return (
-			<div className='mini-cart'>
+			<div className='mini-cart' ref={this.ctg}>
 				{
 					this.props.cart.map((data, index) => {
 						return (

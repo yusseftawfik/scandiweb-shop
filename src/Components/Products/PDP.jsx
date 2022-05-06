@@ -4,8 +4,12 @@ import Navbar from "../Navbar/Navbar";
 import { connect } from "react-redux";
 import { addToCart, selectAttribute } from "../../Redux/products/Actions";
 import "../../Styles/PDP.scss";
+import parse from 'html-react-parser';
 
 class PDP extends Component {
+	componentDidUpdate () {
+		localStorage.setItem("Cart", JSON.stringify(this.props.cart));
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -13,8 +17,8 @@ class PDP extends Component {
 		};
 	}
 	render () {
-		let selectedValue;
-		selectedValue = this.props.currentItem.selectedAttributes?.map(item => Object.values(item))
+		// let selectedValue;
+		// selectedValue = this.props.currentItem.selectedAttributes?.map(item => Object.values(item))
 		return (
 			<>
 				<Navbar />
@@ -44,57 +48,53 @@ class PDP extends Component {
 					</div>
 					<div className="data-container">
 						<div className="product-name">
-							<p>{this.props.currentItem.name}</p>
 							<span>{this.props.currentItem.brand}</span>
+							<p>{this.props.currentItem.name}</p>
 						</div>
-						<div className="product-attributes">
-							{this.props.currentItem.attributes
-								? this.props.currentItem.attributes.map((attribute, index) => {
+						{this.props.currentItem.attributes ? (
+							<div className="item-attributes">
+								{this.props.currentItem.attributes.map((attribute, index) => {
+									console.log('attribute', attribute)
 									return (
-										<>
-											<div className="attribute-name">{attribute.name}:</div>
-											<div
-												className="item-data-attributes-section"
-												key={index}
-											>
-												{attribute.type === "swatch" ? (
-													<div
-														className="item-data-attributes-section-color"
-														key={index}
-													>
-														{attribute.items.map((item) => {
-															return (
-																<div className="button-color">
-																	<input
-																		defaultChecked={item.value === selectedValue ? true : false}
-																		type="radio"
-																		name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
-																		value={item.value}
-																		className="attributes-value"
-																		onClick={() =>
-																			this.props.selectAttribute(
-																				this.props.currentItem.id,
-																				attribute.name,
-																				item.value
-																			)
-																		}
-																	/>
-																	<label
-																		key={index}
-																		htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
-																		className="attribute-color"
-																		style={{ background: `${item.value}` }}
-																	></label>
-																</div>
-															);
-														})}
-													</div>
-												) : (
-													attribute.items.map((item, index2) => {
+										<div className="single-attribute">
+											<div className="attribute-name">{attribute.name}</div>
+											<div className="attribute-values-container">
+												{attribute.type === "swatch"
+													? attribute.items.map((item) => {
+														return (
+															<div className="button-color">
+																<input
+																	defaultChecked={
+																		item.value[0] ? true : false
+																	}
+																	type="radio"
+																	name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																	value={item.value}
+																	className="attributes-value"
+																	onClick={() =>
+																		this.props.selectAttribute(
+																			this.props.currentItem.id,
+																			attribute.name,
+																			item.value
+																		)
+																	}
+																/>
+																<label
+																	key={index}
+																	htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																	className="attribute-color"
+																	style={{ background: `${item.value}` }}
+																></label>
+															</div>
+														);
+													})
+													: attribute.items.map((item, index2) => {
 														return (
 															<div className="button" key={index2}>
 																<input
-																	defaultChecked={item.value === selectedValue ? true : false}
+																	defaultChecked={
+																		item.value[0] ? true : false
+																	}
 																	type="radio"
 																	name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
 																	value={item.value}
@@ -115,14 +115,13 @@ class PDP extends Component {
 																</label>
 															</div>
 														);
-													})
-												)}
+													})}
 											</div>
-										</>
+										</div>
 									);
-								})
-								: null}
-						</div>
+								})}
+							</div>
+						) : null}
 						<div className="product-price">
 							{this.props.currentItem.prices.map((item, index) => {
 								return item.currency.label === this.props.currency ? (
@@ -153,10 +152,9 @@ class PDP extends Component {
 						</div>
 						<div
 							className="description"
-							dangerouslySetInnerHTML={{
-								__html: this.props.currentItem.description,
-							}}
-						></div>
+						>
+							{parse(this.props.currentItem.description)}
+						</div>
 					</div>
 				</div>
 			</>
