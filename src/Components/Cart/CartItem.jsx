@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
 	removeFromCart,
 	adjustQty,
-	selectAttribute,
+	// selectAttribute,
 } from "../../Redux/products/Actions";
 import remove from "../../Assets/remove.svg";
 import "../../Styles/CartItem.scss";
@@ -25,10 +25,7 @@ class CartItem extends Component {
 		this.setState({ qty: currentQty - 1 });
 	};
 	render () {
-		// let selectedValue;
-		// selectedValue = this.props.data.selectedAttributes.map((item) =>
-		// 	Object.values(item)
-		// );
+		console.log(this.props.data.selectedAttribute);
 		return (
 			<div className="cart-item">
 				<div className="item-data">
@@ -48,29 +45,23 @@ class CartItem extends Component {
 						<div className="item-attributes">
 							{this.props.data.attributes.map((attribute, index) => {
 								return (
-									<div className="single-attribute">
+									<div className="single-attribute" key={index}>
 										<div className="attribute-name">{attribute.name}</div>
 										<div className="attribute-values-container">
 											{attribute.type === "swatch"
-												? attribute.items.map((item) => {
+												? attribute.items.map((item, index5) => {
 													return (
-														<div className="button-color">
+														<div className="button-color" key={index5}>
 															<input
-																defaultChecked={
-																	item.value[0] ? true : false
-																}
+																defaultChecked={this.props.data.selectedAttribute.map(
+																	(item) =>
+																		item[attribute.name] === item.value
+																)}
 																disabled
 																type="radio"
 																name={`${this.props.data.name}-${attribute.name}-${index}`}
 																value={item.value}
 																className="attributes-value"
-																onClick={() =>
-																	this.props.selectAttribute(
-																		this.props.data.id,
-																		attribute.name,
-																		item.value
-																	)
-																}
 															/>
 															<label
 																key={index}
@@ -81,25 +72,19 @@ class CartItem extends Component {
 														</div>
 													);
 												})
-												: attribute.items.map((item, index2) => {
+												: attribute.items.map((item, index3) => {
 													return (
-														<div className="button" key={index2}>
+														<div className="button" key={index3}>
 															<input
-																defaultChecked={
-																	item.value[0] ? true : false
-																}
+																defaultChecked={this.props.data.selectedAttribute.map(
+																	(item) =>
+																		item[attribute.name] === item.value
+																)}
 																disabled
 																type="radio"
 																name={`${this.props.data.name}-${attribute.name}-${index}`}
 																value={item.value}
 																className="attributes-value"
-																onClick={() =>
-																	this.props.selectAttribute(
-																		this.props.data.id,
-																		attribute.name,
-																		item.value
-																	)
-																}
 															/>
 															<label
 																className="attributes-label"
@@ -164,8 +149,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		removeFromCart: (id) => dispatch(removeFromCart(id)),
 		adjustQty: (id, qty) => dispatch(adjustQty(id, qty)),
-		selectAttribute: (id, attribute, value) =>
-			dispatch(selectAttribute(id, attribute, value)),
+		// selectAttribute: (id, attribute, value) =>
+		// 	dispatch(selectAttribute(id, attribute, value)),
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

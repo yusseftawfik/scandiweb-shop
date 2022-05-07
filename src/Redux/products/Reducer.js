@@ -25,7 +25,9 @@ const productReducer = (state = INITIAL_STATE, action) => {
 			const inCart = state.cart.find((item) =>
 				item.id === action.payload.id ? true : false
 			);
-			let selectedAttributes = [];
+			let selectedAttribute = item.attributes?.map((item) => {
+				return { [item.name]: item.items[0].value }
+			})
 			return {
 				...state,
 				cart: inCart
@@ -34,11 +36,14 @@ const productReducer = (state = INITIAL_STATE, action) => {
 							? {
 								...item,
 								qty: item.qty + 1,
-								selectedAttributes: item.selectedAttributes ? [...item.selectedAttributes] : selectedAttributes
+								selectedAttribute
 							}
 							: item
 					)
-					: [...state.cart, { ...item, qty: 1, selectedAttributes }],
+					: [...state.cart, {
+						...item, qty: 1,
+						selectedAttribute
+					}],
 			};
 		case actionTypes.REMOVE_FROM_CART:
 			return {
@@ -54,18 +59,19 @@ const productReducer = (state = INITIAL_STATE, action) => {
 						: item
 				),
 			};
-		case actionTypes.ADJUST_ATTRIBUTES:
-			return {
-				...state,
-				cart: state.data.map((item) =>
-					item.id === action.id
-						? {
-							...item,
-							...item.selectedAttributes.push({ [action.name]: action.value }),
-						}
-						: item
-				),
-			};
+		// case actionTypes.ADJUST_ATTRIBUTES:
+		// 	let selectedAttributes = [];
+		// 	return {
+		// 		...state,
+		// 		cart: state.data.map((item) =>
+		// 			item.id === action.id
+		// 				? {
+		// 					...item,
+		// 					selectedAttributes: { [action.selectedAttributes.name]: action.selectedAttributes.value }
+		// 				}
+		// 				: item
+		// 		),
+		// 	};
 		case actionTypes.LOAD_CURRENT_ITEMS:
 			return {
 				...state,

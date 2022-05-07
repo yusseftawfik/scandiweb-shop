@@ -12,7 +12,7 @@
 
 	&:hover {
 		.add-to-cart {
-			transform: scale(2);
+			transform: scale(1.75);
 			transition-duration: .3s;
 		}
 	}
@@ -45,7 +45,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background-color: var(--primary-color);
+			background: var(--primary-color);
 			width: 35px;
 			height: 35px;
 			border-radius: 50%;

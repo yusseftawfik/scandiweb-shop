@@ -43,6 +43,13 @@
 		flex-direction: column;
 		gap: 15px;
 
+		form {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column;
+			gap: 15px;
+		}
+
 		.product-name {
 			p {
 				font-size: 25px;
@@ -82,6 +89,10 @@
 					gap: 5px;
 					align-items: center;
 
+					input[type='radio']:disabled {
+						cursor: default;
+					}
+
 
 					.button-color {
 						position: relative;
@@ -108,6 +119,13 @@
 							outline: 2px solid var(--primary-color);
 							outline-offset: 1px;
 							border: 0;
+
+							&:disabled {
+								border: 1px solid #999999;
+								background-color: #cccccc;
+								color: #666666;
+								cursor: default;
+							}
 						}
 					}
 
@@ -142,6 +160,13 @@
 							border: 1px solid #000;
 							background: #000;
 							color: #fff;
+
+							&:disabled {
+								border: 1px solid #999999;
+								background-color: #cccccc;
+								color: #666666;
+								cursor: default;
+							}
 						}
 					}
 				}
@@ -166,27 +191,30 @@
 				font-weight: 700;
 			}
 		}
+	}
 
-		div:nth-child(4) {
-			.addtocart-btn {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				padding: 15px 30px;
-				width: 100%;
-				height: 50px;
-				background: var(--primary-color);
-				border: 0;
-				outline: 0;
-				color: #fff;
-				font-weight: 500;
-				text-transform: uppercase;
-				transition-duration: .3s;
+	.addtocart-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 15px 30px;
+		width: 100%;
+		height: 50px;
+		background: var(--primary-color);
+		border: 0;
+		outline: 0;
+		color: #fff;
+		font-weight: 500;
+		text-transform: uppercase;
+		transition-duration: .3s;
 
-				&:hover {
-					font-weight: 900;
-				}
-			}
+		&:hover {
+			font-weight: 900;
+		}
+
+		&:disabled {
+			background: #5ece7c6e;
+			cursor: default;
 		}
 	}
 
@@ -207,13 +235,14 @@
 		padding: 15px 30px;
 		width: 100%;
 		height: 50px;
-		background: #8D8F9A;
-		border: 0;
 		outline: 0;
-		color: #fff;
 		font-weight: 500;
 		text-transform: uppercase;
 		transition-duration: .3s;
+		border: 1px solid #999999;
+		background-color: #cccccc;
+		color: #666666;
+		cursor: default;
 
 		&:hover {
 			font-weight: 900;

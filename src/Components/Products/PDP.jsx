@@ -1,10 +1,12 @@
-// product description page
 import React, { Component } from "react";
 import Navbar from "../Navbar/Navbar";
 import { connect } from "react-redux";
-import { addToCart, selectAttribute } from "../../Redux/products/Actions";
+import {
+	addToCart,
+	// selectAttribute
+} from "../../Redux/products/Actions";
 import "../../Styles/PDP.scss";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 
 class PDP extends Component {
 	componentDidUpdate () {
@@ -14,11 +16,26 @@ class PDP extends Component {
 		super(props);
 		this.state = {
 			index: 0,
+			// value: "",
 		};
+		// this.handleChange = this.handleChange.bind(this);
+		// this.handleSubmit = this.handleSubmit.bind(this);
 	}
+	// handleChange (e) {
+	// 	this.setState({ value: e.target.value });
+	// }
+	// handleSubmit (e) {
+	// 	alert("A name was submitted: " + this.state.value);
+	// 	e.preventDefault();
+	// }
+	// onClick={() =>
+	// 	this.props.selectAttribute(
+	// 		this.props.currentItem.id,
+	// 		attribute.name,
+	// 		item.value
+	// 	)
+	// }
 	render () {
-		// let selectedValue;
-		// selectedValue = this.props.currentItem.selectedAttributes?.map(item => Object.values(item))
 		return (
 			<>
 				<Navbar />
@@ -32,6 +49,7 @@ class PDP extends Component {
 										height="auto"
 										width="50"
 										alt="product"
+										key={index}
 										onClick={() => this.setState({ index: index })}
 									/>
 								))}
@@ -51,108 +69,108 @@ class PDP extends Component {
 							<span>{this.props.currentItem.brand}</span>
 							<p>{this.props.currentItem.name}</p>
 						</div>
-						{this.props.currentItem.attributes ? (
-							<div className="item-attributes">
-								{this.props.currentItem.attributes.map((attribute, index) => {
-									console.log('attribute', attribute)
-									return (
-										<div className="single-attribute">
-											<div className="attribute-name">{attribute.name}</div>
-											<div className="attribute-values-container">
-												{attribute.type === "swatch"
-													? attribute.items.map((item) => {
-														return (
-															<div className="button-color">
-																<input
-																	defaultChecked={
-																		item.value[0] ? true : false
-																	}
-																	type="radio"
-																	name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
-																	value={item.value}
-																	className="attributes-value"
-																	onClick={() =>
-																		this.props.selectAttribute(
-																			this.props.currentItem.id,
-																			attribute.name,
-																			item.value
-																		)
-																	}
-																/>
-																<label
-																	key={index}
-																	htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
-																	className="attribute-color"
-																	style={{ background: `${item.value}` }}
-																></label>
-															</div>
-														);
-													})
-													: attribute.items.map((item, index2) => {
-														return (
-															<div className="button" key={index2}>
-																<input
-																	defaultChecked={
-																		item.value[0] ? true : false
-																	}
-																	type="radio"
-																	name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
-																	value={item.value}
-																	className="attributes-value"
-																	onClick={() =>
-																		this.props.selectAttribute(
-																			this.props.currentItem.id,
-																			attribute.name,
-																			item.value
-																		)
-																	}
-																/>
-																<label
-																	className="attributes-label"
-																	htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
-																>
-																	{item.value}
-																</label>
-															</div>
-														);
-													})}
+
+						{/* <form onSubmit={this.handleSubmit}> */}
+							{this.props.currentItem.attributes ? (
+								<div className="item-attributes">
+									{this.props.currentItem.attributes.map((attribute, index) => {
+										return (
+											<div className="single-attribute" key={index}>
+												<div className="attribute-name">{attribute.name}</div>
+												<div className="attribute-values-container">
+													{attribute.type === "swatch"
+														? attribute.items.map((item, index2) => {
+															return (
+																<div className="button-color" key={index2}>
+																	<input
+																		onClick={() =>
+																			this.props.selectAttribute(
+																				this.props.currentItem.id,
+																				attribute.name,
+																				item.value
+																			)
+																		}
+																		disabled={!this.props.currentItem.inStock}
+																		type="radio"
+																		name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																		value={item.value}
+																		className="attributes-value"
+																	/>
+																	<label
+																		key={index}
+																		htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																		className="attribute-color"
+																		style={{ background: `${item.value}` }}
+																	></label>
+																</div>
+															);
+														})
+														: attribute.items.map((item, index2) => {
+															return (
+																<div className="button" key={index2}>
+																	<input
+																		// onClick={() =>
+																		// 	this.props.selectAttribute(
+																		// 		this.props.currentItem.id,
+																		// 		attribute.name,
+																		// 		item.value
+																		// 	)
+																		// }
+																		type="radio"
+																		disabled={!this.props.currentItem.inStock}
+																		name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																		value={item.value}
+																		className="attributes-value"
+																	/>
+																	<label
+																		className="attributes-label"
+																		htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																	>
+																		{item.value}
+																	</label>
+																</div>
+															);
+														})}
+												</div>
 											</div>
-										</div>
-									);
+										);
+									})}
+								</div>
+							) : null}
+							<div className="product-price">
+								{this.props.currentItem.prices.map((item, index) => {
+									return item.currency.label === this.props.currency ? (
+										<span className="item-price" key={index}>
+											{item.amount.toLocaleString("en-US", {
+												style: "currency",
+												currency: this.props.currency,
+											})}
+										</span>
+									) : null;
 								})}
 							</div>
-						) : null}
-						<div className="product-price">
-							{this.props.currentItem.prices.map((item, index) => {
-								return item.currency.label === this.props.currency ? (
-									<span className="item-price" key={index}>
-										{item.amount.toLocaleString("en-US", {
-											style: "currency",
-											currency: this.props.currency,
-										})}
-									</span>
-								) : null;
-							})}
-						</div>
-						<div>
-							{this.props.currentItem.inStock ? (
-								<button
-									className="addtocart-btn"
-									onClick={() =>
-										this.props.addToCart(this.props.currentItem.id)
-									}
-								>
-									add to cart
-								</button>
-							) : (
-								<button disabled={true} className="outofstock-btn">
-									out of stock
-								</button>
-							)}
-						</div>
-						<div
-							className="description"
-						>
+							<div>
+								{this.props.currentItem.inStock ? (
+									<button
+										className="addtocart-btn"
+										type="submit"
+										// disabled={!this.state.value}
+										onClick={() =>
+											this.props.addToCart(this.props.currentItem.id)
+										}
+									>
+										add to cart
+									</button>
+								) : (
+									<button disabled={true} className="outofstock-btn">
+										out of stock
+									</button>
+								)}
+							</div>
+
+						{/* </form> */}
+
+						<div className="description">
 							{parse(this.props.currentItem.description)}
 						</div>
 					</div>
@@ -164,8 +182,8 @@ class PDP extends Component {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addToCart: (id) => dispatch(addToCart(id)),
-		selectAttribute: (id, attribute, value) =>
-			dispatch(selectAttribute(id, attribute, value)),
+		// selectAttribute: (id, attribute, value) =>
+		// 	dispatch(selectAttribute(id, attribute, value)),
 	};
 };
 const mapStateToProps = (state) => {

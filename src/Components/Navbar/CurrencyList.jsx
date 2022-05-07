@@ -31,7 +31,6 @@ class CurrencyList extends Component {
 		this.props.handleCurrency(!this.state.currencyToggle);
 	};
 	render () {
-		console.log('props',this.props);
 		return (
 			<div className="currency-list" ref={this.crny}>
 				{this.props.data.loading

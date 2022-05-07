@@ -18,11 +18,23 @@ export const setCategory = (value) => {
 	}
 }
 
-export const addToCart = (itemID) => {
+// export const addToCart = (itemID) => {
+// 	return {
+// 		type: actionTypes.ADD_TO_CART,
+// 		payload: {
+// 			id: itemID
+// 		}
+// 	}
+// }
+
+export const addToCart = (itemID, name, value) => {
 	return {
 		type: actionTypes.ADD_TO_CART,
 		payload: {
 			id: itemID
+		},
+		selectedAttributes: {
+			[name]: value,
 		}
 	}
 }
@@ -46,14 +58,15 @@ export const adjustQty = (itemID, value) => {
 	}
 }
 
-export const selectAttribute = (itemID, name, value) => {
-	return {
-		type: actionTypes.ADJUST_ATTRIBUTES,
-		id: itemID,
-		name: name,
-		value: value
-	}
-}
+// export const selectAttribute = (itemID, name, value) => {
+// 	return {
+// 		type: actionTypes.ADJUST_ATTRIBUTES,
+// 		id: itemID,
+// 		selectedAttributes: {
+// 			[name]: value,
+// 		}
+// 	}
+// }
 
 export const loadCurrentItems = (item) => {
 	return {
