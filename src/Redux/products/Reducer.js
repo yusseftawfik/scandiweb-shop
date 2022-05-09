@@ -40,12 +40,13 @@ const productReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				cart: inCart
 					? state.cart.map((item) =>
-						item.id === action.payload.id
+						item.cartID === action.payload.cartID
 							? {
 								...item,
 								qty: item.qty + 1,
 							}
-							: item
+							: item.id === action.payload.id ?
+								item : item
 					)
 					: [
 						...state.cart,

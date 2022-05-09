@@ -47,13 +47,12 @@ class Cart extends Component {
 						<h1>Cart</h1>
 						<button className="clear-btn" onClick={this.clearCart}>
 							<img src={trash} alt="clear" width="10" height="10" />
-							<span>CLEAR CART!</span>
+							<span>EMPTY CART!</span>
 						</button>
 					</div>
 					{this.props.cart.map((data, index) => {
 						return (
 							<div key={index} style={{ width: "-webkit-fill-available" }}>
-								{/* <hr /> */}
 								<CartItem data={data} />
 							</div>
 						);
@@ -79,7 +78,7 @@ class Cart extends Component {
 						<div>
 							<span>Tax:</span>
 							<span>
-								(15%){' '}
+								(15%){" "}
 								{Math.ceil(this.state.cartTotalPrice * 0.015).toLocaleString(
 									"en-US",
 									{

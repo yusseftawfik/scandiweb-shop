@@ -25,8 +25,12 @@ class PDP extends Component {
 		});
 	};
 	handleSubmit = (e) => {
+		let cartID = this.props.currentItem.attributes
+			?.map((att) => `${this.props.currentItem.id}-${att.name}-${this.state.value}`)
+			.toString();
 		this.props.addToCart(
 			this.props.currentItem.id,
+			cartID,
 			this.state.name,
 			this.state.value
 		);
@@ -164,7 +168,7 @@ class PDP extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addToCart: (id, name, value) => dispatch(addToCart(id, name, value)),
+		addToCart: (id, cartID, name, value) => dispatch(addToCart(id, cartID, name, value)),
 	};
 };
 const mapStateToProps = (state) => {

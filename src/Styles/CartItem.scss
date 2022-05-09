@@ -125,6 +125,29 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			position: relative;
+
+			.img-btn {
+				position: absolute;
+				right: 10px;
+				bottom: 10px;
+				width: 35px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				button {
+					color: #fff;
+					background: rgba(0, 0, 0, 0.5);
+					border: 0;
+					outline: 0;
+					width: 15px;
+					height: 15px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
 		}
 
 		.qty-btns {

@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import CartItem from './CartItem';
-import '../../Styles/MiniCart.scss';
+import CartItem from "./CartItem";
+import "../../Styles/MiniCart.scss";
 class MiniCart extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			cartTotalPrice: 0,
-			cartToggle: true
-		}
+			cartToggle: true,
+		};
 		this.ctg = React.createRef();
 		this.outsideCategory = this.outsideCategory.bind(this);
 	}
@@ -22,7 +22,7 @@ class MiniCart extends Component {
 	}
 	componentWillReceiveProps (previousState) {
 		if (previousState.cartTotalPrice !== this.state.cartTotalPrice) {
-			this.setPrice()
+			this.setPrice();
 		}
 	}
 	outsideCategory (event) {
@@ -32,58 +32,55 @@ class MiniCart extends Component {
 	}
 	cartToggle = () => {
 		this.props.handleCategory(!this.state.cartToggle);
-	}
-
+	};
 	setPrice () {
 		let price = 0;
 		let currentPrice = 0;
-		this.props.cart.forEach(item => {
-			currentPrice = item.prices.find((item) => item.currency.label === this.props.currency);
-			price += currentPrice.amount * item.qty
+		this.props.cart.forEach((item) => {
+			currentPrice = item.prices.find(
+				(item) => item.currency.label === this.props.currency
+			);
+			price += currentPrice.amount * item.qty;
 			this.setState(() => {
-				return { cartTotalPrice: Math.ceil(price) }
-			})
-		})
+				return { cartTotalPrice: Math.ceil(price) };
+			});
+		});
 	}
 	render () {
 		return (
-			<div className='mini-cart' ref={this.ctg}>
-				{
-					this.props.cart.map((data, index) => {
-						return (
-							<div key={index} style={{ width: '-webkit-fill-available' }}>
-								<CartItem data={data} key={index} />
+			<>
+				{this.props.cart.length > 0 ? (
+					<div className="mini-cart" ref={this.ctg}>
+						{this.props.cart.map((data, index) => {
+							return (
+								<div key={index} style={{ width: "-webkit-fill-available" }}>
+									<CartItem data={data} key={index} />
+								</div>
+							);
+						})}
+						<div className="mini-cart-summary">
+							<div className="price-container">
+								<span>Total</span>
+								<span>
+									{this.state.cartTotalPrice.toLocaleString("en-US", {
+										style: "currency",
+										currency: this.props.currency,
+									})}
+								</span>
 							</div>
-						)
-					})
-				}
-				<div className='mini-cart-summary'>
-					<div className='price-container'>
-						<span>
-							Total
-						</span>
-						<span>
-							{(this.state.cartTotalPrice).toLocaleString('en-US', {
-								style: 'currency',
-								currency: this.props.currency,
-							})}
-						</span>
-					</div>
-					<div className='btn-container'>
-						<div>
-							<Link to='/cart'>
-								vew bag
-							</Link>
-						</div>
-						<div className='checkout-btn'>
-							<Link to='/checkout'>
-								checkout
-							</Link>
+							<div className="btn-container">
+								<div>
+									<Link to="/cart">view bag</Link>
+								</div>
+								<div className="checkout-btn">
+									<Link to="/checkout">checkout</Link>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		)
+				) : null}
+			</>
+		);
 	}
 }
 const mapStateToProps = (state) => {

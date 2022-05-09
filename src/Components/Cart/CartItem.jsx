@@ -3,22 +3,34 @@ import { connect } from "react-redux";
 import { removeFromCart, adjustQty } from "../../Redux/products/Actions";
 import remove from "../../Assets/remove.svg";
 import "../../Styles/CartItem.scss";
+
 class CartItem extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			qty: props.data.qty,
+			qty: this.props.data.qty,
+			imgIndex: 0,
 		};
 	}
-	increaseQty = (e) => {
+	increaseQty = () => {
 		let currentQty = this.state.qty;
 		this.props.adjustQty(this.props.data.cartID, currentQty);
 		this.setState({ qty: currentQty + 1 });
 	};
-	decreaseQty = (e) => {
+	decreaseQty = () => {
 		let currentQty = this.state.qty;
 		this.props.adjustQty(this.props.data.cartID, currentQty);
 		this.setState({ qty: currentQty - 1 });
+	};
+	nextImg = () => {
+		if (this.state.imgIndex < this.props.data.gallery.length - 1) {
+			this.setState((prevState) => ({ imgIndex: prevState.imgIndex + 1 }));
+		}
+	};
+	prevImg = () => {
+		if (this.state.imgIndex > 0) {
+			this.setState((prevState) => ({ imgIndex: prevState.imgIndex - 1 }));
+		}
 	};
 	render () {
 		return (
@@ -44,22 +56,25 @@ class CartItem extends Component {
 										<div className="attribute-name">{attribute.name}</div>
 										<div className="attribute-values-container">
 											{attribute.type === "swatch"
-												? attribute.items.map((item, index5) => {
+												? attribute.items.map((item, index2) => {
 													return (
-														<div className="button-color" key={index5}>
+														<div className="button-color" key={index2}>
 															<input
-																defaultChecked={this.props.data.selectedAttribute?.find(
-																	(att) => att[attribute.name] === item.value
+																checked={this.props.data.selectedAttribute.find(
+																	(att) =>
+																		att[
+																		`${this.props.data.name}-${attribute.name}`
+																		] === item.value
 																)}
 																disabled
 																type="radio"
-																name={`${this.props.data.name}-${attribute.name}`}
+																name={`${this.props.data.cartID}-${attribute.name}`}
 																value={item.value}
 																className="attributes-value"
 															/>
 															<label
 																key={index}
-																htmlFor={`${this.props.data.name}-${attribute.name}`}
+																htmlFor={`${this.props.data.cartID}-${attribute.name}`}
 																className="attribute-color"
 																style={{ background: `${item.value}` }}
 															></label>
@@ -68,7 +83,6 @@ class CartItem extends Component {
 												})
 												: attribute.items.map((item, index3) => {
 													return (
-														// this.props.data.selectedAttribute.map(att => console.log(att)),
 														<div className="button" key={index3}>
 															<input
 																onChange={this.handleChange}
@@ -80,13 +94,13 @@ class CartItem extends Component {
 																)}
 																disabled
 																type="radio"
-																name={`${this.props.data.name}-${attribute.name}`}
+																name={`${this.props.data.cartID}-${attribute.name}`}
 																value={item.value}
 																className="attributes-value"
 															/>
 															<label
 																className="attributes-label"
-																htmlFor={`${this.props.data.name}-${attribute.name}`}
+																htmlFor={`${this.props.data.cartID}-${attribute.name}`}
 															>
 																{item.value}
 															</label>
@@ -116,7 +130,9 @@ class CartItem extends Component {
 								alt=""
 								width="27"
 								height="27"
-								onClick={() => this.props.removeFromCart(this.props.data.cartID)}
+								onClick={() =>
+									this.props.removeFromCart(this.props.data.cartID)
+								}
 							/>
 						) : (
 							<button onClick={this.decreaseQty}>-</button>
@@ -124,11 +140,17 @@ class CartItem extends Component {
 					</div>
 					<div className="image-container">
 						<img
-							src={this.props.data.gallery[0]}
+							src={this.props.data.gallery[this.state.imgIndex]}
 							alt={this.props.data.name}
 							width="120"
 							height="auto"
 						/>
+						{this.props.data.gallery.length > 1 ? (
+							<div className="img-btn">
+								<button onClick={this.prevImg}>&lt;</button>
+								<button onClick={this.nextImg}>&gt;</button>
+							</div>
+						) : null}
 					</div>
 				</div>
 			</div>
