@@ -119,13 +119,13 @@
 							outline: 2px solid var(--primary-color);
 							outline-offset: 1px;
 							border: 0;
+						}
 
-							&:disabled {
-								border: 1px solid #999999;
-								background-color: #cccccc;
-								color: #666666;
-								cursor: default;
-							}
+						input[type='radio']:disabled + label {
+							border: 1px solid #999999;
+							background-color: #cccccc !important;
+							color: #666666;
+							cursor: default;
 						}
 					}
 
@@ -160,13 +160,13 @@
 							border: 1px solid #000;
 							background: #000;
 							color: #fff;
+						}
 
-							&:disabled {
-								border: 1px solid #999999;
-								background-color: #cccccc;
-								color: #666666;
-								cursor: default;
-							}
+						input[type='radio']:disabled + label {
+							border: 1px solid #999999;
+							background-color: #cccccc;
+							color: #666666;
+							cursor: default;
 						}
 					}
 				}

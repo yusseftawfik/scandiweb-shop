@@ -18,55 +18,35 @@ export const setCategory = (value) => {
 	}
 }
 
-// export const addToCart = (itemID) => {
-// 	return {
-// 		type: actionTypes.ADD_TO_CART,
-// 		payload: {
-// 			id: itemID
-// 		}
-// 	}
-// }
-
 export const addToCart = (itemID, name, value) => {
 	return {
 		type: actionTypes.ADD_TO_CART,
 		payload: {
-			id: itemID
+			id: itemID,
+			name: name,
+			value: value
 		},
-		selectedAttributes: {
-			[name]: value,
-		}
 	}
 }
 
-export const removeFromCart = (itemID) => {
+export const removeFromCart = (cartID) => {
 	return {
 		type: actionTypes.REMOVE_FROM_CART,
 		payload: {
-			id: itemID
+			cartID: cartID,
 		}
 	}
 }
 
-export const adjustQty = (itemID, value) => {
+export const adjustQty = (cartID, value) => {
 	return {
 		type: actionTypes.ADJUST_QTY,
 		payload: {
-			id: itemID,
+			cartID: cartID,
 			qty: value
 		}
 	}
 }
-
-// export const selectAttribute = (itemID, name, value) => {
-// 	return {
-// 		type: actionTypes.ADJUST_ATTRIBUTES,
-// 		id: itemID,
-// 		selectedAttributes: {
-// 			[name]: value,
-// 		}
-// 	}
-// }
 
 export const loadCurrentItems = (item) => {
 	return {

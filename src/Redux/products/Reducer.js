@@ -23,11 +23,19 @@ const productReducer = (state = INITIAL_STATE, action) => {
 		case actionTypes.ADD_TO_CART:
 			const item = state.data.find((item) => item.id === action.payload.id);
 			const inCart = state.cart.find((item) =>
-				item.id === action.payload.id ? true : false
+				item.id === action.payload.id &&
+					item.selectedAttribute.some(
+						(obj) => obj[action.payload.name] === action.payload.value
+					)
+					? true
+					: false
 			);
-			let selectedAttribute = item.attributes?.map((item) => {
-				return { [item.name]: item.items[0].value }
-			})
+			let selectedAttribute = item.attributes?.map((att) => {
+				return { [`${item.name}-${att.name}`]: action.payload.value };
+			});
+			let cartID = item.attributes
+				?.map((att) => `${item.id}-${att.name}-${action.payload.value}`)
+				.toString();
 			return {
 				...state,
 				cart: inCart
@@ -36,42 +44,35 @@ const productReducer = (state = INITIAL_STATE, action) => {
 							? {
 								...item,
 								qty: item.qty + 1,
-								selectedAttribute
 							}
 							: item
 					)
-					: [...state.cart, {
-						...item, qty: 1,
-						selectedAttribute
-					}],
+					: [
+						...state.cart,
+						{
+							...item,
+							cartID,
+							qty: 1,
+							selectedAttribute,
+						},
+					],
 			};
 		case actionTypes.REMOVE_FROM_CART:
 			return {
 				...state,
-				cart: state.cart.filter((item) => item.id !== action.payload.id),
+				cart: state.cart.filter(
+					(item) => item.cartID !== action.payload.cartID
+				),
 			};
 		case actionTypes.ADJUST_QTY:
 			return {
 				...state,
 				cart: state.cart.map((item) =>
-					item.id === action.payload.id
+					item.cartID === action.payload.cartID
 						? { ...item, qty: action.payload.qty }
 						: item
 				),
 			};
-		// case actionTypes.ADJUST_ATTRIBUTES:
-		// 	let selectedAttributes = [];
-		// 	return {
-		// 		...state,
-		// 		cart: state.data.map((item) =>
-		// 			item.id === action.id
-		// 				? {
-		// 					...item,
-		// 					selectedAttributes: { [action.selectedAttributes.name]: action.selectedAttributes.value }
-		// 				}
-		// 				: item
-		// 		),
-		// 	};
 		case actionTypes.LOAD_CURRENT_ITEMS:
 			return {
 				...state,

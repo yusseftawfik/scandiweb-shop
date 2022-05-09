@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import Navbar from "../Navbar/Navbar";
-import { connect } from "react-redux";
-import {
-	addToCart,
-	// selectAttribute
-} from "../../Redux/products/Actions";
-import "../../Styles/PDP.scss";
 import parse from "html-react-parser";
+import { connect } from "react-redux";
+import { addToCart } from "../../Redux/products/Actions";
+import Navbar from "../Navbar/Navbar";
+import "../../Styles/PDP.scss";
 
 class PDP extends Component {
 	componentDidUpdate () {
@@ -16,25 +13,25 @@ class PDP extends Component {
 		super(props);
 		this.state = {
 			index: 0,
-			// value: "",
+			name: "",
+			value: "",
 		};
-		// this.handleChange = this.handleChange.bind(this);
-		// this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	// handleChange (e) {
-	// 	this.setState({ value: e.target.value });
-	// }
-	// handleSubmit (e) {
-	// 	alert("A name was submitted: " + this.state.value);
-	// 	e.preventDefault();
-	// }
-	// onClick={() =>
-	// 	this.props.selectAttribute(
-	// 		this.props.currentItem.id,
-	// 		attribute.name,
-	// 		item.value
-	// 	)
-	// }
+	handleChange = (e) => {
+		const { name, value } = e.target;
+		this.setState({
+			name: name,
+			value: value,
+		});
+	};
+	handleSubmit = (e) => {
+		this.props.addToCart(
+			this.props.currentItem.id,
+			this.state.name,
+			this.state.value
+		);
+		e.preventDefault();
+	};
 	render () {
 		return (
 			<>
@@ -69,8 +66,7 @@ class PDP extends Component {
 							<span>{this.props.currentItem.brand}</span>
 							<p>{this.props.currentItem.name}</p>
 						</div>
-
-						{/* <form onSubmit={this.handleSubmit}> */}
+						<form onSubmit={this.handleSubmit}>
 							{this.props.currentItem.attributes ? (
 								<div className="item-attributes">
 									{this.props.currentItem.attributes.map((attribute, index) => {
@@ -83,22 +79,16 @@ class PDP extends Component {
 															return (
 																<div className="button-color" key={index2}>
 																	<input
-																		onClick={() =>
-																			this.props.selectAttribute(
-																				this.props.currentItem.id,
-																				attribute.name,
-																				item.value
-																			)
-																		}
+																		onChange={this.handleChange}
 																		disabled={!this.props.currentItem.inStock}
 																		type="radio"
-																		name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																		name={`${this.props.currentItem.name}-${attribute.name}`}
 																		value={item.value}
 																		className="attributes-value"
 																	/>
 																	<label
 																		key={index}
-																		htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																		htmlFor={`${this.props.currentItem.name}-${attribute.name}`}
 																		className="attribute-color"
 																		style={{ background: `${item.value}` }}
 																	></label>
@@ -109,22 +99,16 @@ class PDP extends Component {
 															return (
 																<div className="button" key={index2}>
 																	<input
-																		// onClick={() =>
-																		// 	this.props.selectAttribute(
-																		// 		this.props.currentItem.id,
-																		// 		attribute.name,
-																		// 		item.value
-																		// 	)
-																		// }
+																		onChange={this.handleChange}
 																		type="radio"
 																		disabled={!this.props.currentItem.inStock}
-																		name={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																		name={`${this.props.currentItem.name}-${attribute.name}`}
 																		value={item.value}
 																		className="attributes-value"
 																	/>
 																	<label
 																		className="attributes-label"
-																		htmlFor={`${this.props.currentItem.name}-${attribute.name}-${index}`}
+																		htmlFor={`${this.props.currentItem.name}-${attribute.name}`}
 																	>
 																		{item.value}
 																	</label>
@@ -154,9 +138,10 @@ class PDP extends Component {
 									<button
 										className="addtocart-btn"
 										type="submit"
-										// disabled={!this.state.value}
-										onClick={() =>
-											this.props.addToCart(this.props.currentItem.id)
+										disabled={
+											this.props.currentItem.attributes.length > 0
+												? !this.state.value
+												: false
 										}
 									>
 										add to cart
@@ -167,9 +152,7 @@ class PDP extends Component {
 									</button>
 								)}
 							</div>
-
-						{/* </form> */}
-
+						</form>
 						<div className="description">
 							{parse(this.props.currentItem.description)}
 						</div>
@@ -181,9 +164,7 @@ class PDP extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addToCart: (id) => dispatch(addToCart(id)),
-		// selectAttribute: (id, attribute, value) =>
-		// 	dispatch(selectAttribute(id, attribute, value)),
+		addToCart: (id, name, value) => dispatch(addToCart(id, name, value)),
 	};
 };
 const mapStateToProps = (state) => {

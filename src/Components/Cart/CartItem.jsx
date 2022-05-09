@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-	removeFromCart,
-	adjustQty,
-	// selectAttribute,
-} from "../../Redux/products/Actions";
+import { removeFromCart, adjustQty } from "../../Redux/products/Actions";
 import remove from "../../Assets/remove.svg";
 import "../../Styles/CartItem.scss";
 class CartItem extends Component {
@@ -16,16 +12,15 @@ class CartItem extends Component {
 	}
 	increaseQty = (e) => {
 		let currentQty = this.state.qty;
-		this.props.adjustQty(this.props.data.id, currentQty);
+		this.props.adjustQty(this.props.data.cartID, currentQty);
 		this.setState({ qty: currentQty + 1 });
 	};
 	decreaseQty = (e) => {
 		let currentQty = this.state.qty;
-		this.props.adjustQty(this.props.data.id, currentQty);
+		this.props.adjustQty(this.props.data.cartID, currentQty);
 		this.setState({ qty: currentQty - 1 });
 	};
 	render () {
-		console.log(this.props.data.selectedAttribute);
 		return (
 			<div className="cart-item">
 				<div className="item-data">
@@ -53,19 +48,18 @@ class CartItem extends Component {
 													return (
 														<div className="button-color" key={index5}>
 															<input
-																defaultChecked={this.props.data.selectedAttribute.map(
-																	(item) =>
-																		item[attribute.name] === item.value
+																defaultChecked={this.props.data.selectedAttribute?.find(
+																	(att) => att[attribute.name] === item.value
 																)}
 																disabled
 																type="radio"
-																name={`${this.props.data.name}-${attribute.name}-${index}`}
+																name={`${this.props.data.name}-${attribute.name}`}
 																value={item.value}
 																className="attributes-value"
 															/>
 															<label
 																key={index}
-																htmlFor={`${this.props.data.name}-${attribute.name}-${index}`}
+																htmlFor={`${this.props.data.name}-${attribute.name}`}
 																className="attribute-color"
 																style={{ background: `${item.value}` }}
 															></label>
@@ -74,21 +68,25 @@ class CartItem extends Component {
 												})
 												: attribute.items.map((item, index3) => {
 													return (
+														// this.props.data.selectedAttribute.map(att => console.log(att)),
 														<div className="button" key={index3}>
 															<input
-																defaultChecked={this.props.data.selectedAttribute.map(
-																	(item) =>
-																		item[attribute.name] === item.value
+																onChange={this.handleChange}
+																checked={this.props.data.selectedAttribute.find(
+																	(att) =>
+																		att[
+																		`${this.props.data.name}-${attribute.name}`
+																		] === item.value
 																)}
 																disabled
 																type="radio"
-																name={`${this.props.data.name}-${attribute.name}-${index}`}
+																name={`${this.props.data.name}-${attribute.name}`}
 																value={item.value}
 																className="attributes-value"
 															/>
 															<label
 																className="attributes-label"
-																htmlFor={`${this.props.data.name}-${attribute.name}-${index}`}
+																htmlFor={`${this.props.data.name}-${attribute.name}`}
 															>
 																{item.value}
 															</label>
@@ -118,7 +116,7 @@ class CartItem extends Component {
 								alt=""
 								width="27"
 								height="27"
-								onClick={() => this.props.removeFromCart(this.props.data.id)}
+								onClick={() => this.props.removeFromCart(this.props.data.cartID)}
 							/>
 						) : (
 							<button onClick={this.decreaseQty}>-</button>
@@ -147,10 +145,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		removeFromCart: (id) => dispatch(removeFromCart(id)),
+		removeFromCart: (cartID) => dispatch(removeFromCart(cartID)),
 		adjustQty: (id, qty) => dispatch(adjustQty(id, qty)),
-		// selectAttribute: (id, attribute, value) =>
-		// 	dispatch(selectAttribute(id, attribute, value)),
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
