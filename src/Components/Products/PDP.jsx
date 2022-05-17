@@ -37,6 +37,7 @@ class PDP extends Component {
 		e.preventDefault();
 	};
 	render () {
+		// console.log(this.props.currentItem.attributes.map(att => att))
 		return (
 			<>
 				<Navbar />
@@ -76,7 +77,7 @@ class PDP extends Component {
 									{this.props.currentItem.attributes.map((attribute, index) => {
 										return (
 											<div className="single-attribute" key={index}>
-												<div className="attribute-name">{attribute.name}</div>
+												<div className="attribute-name">{attribute.name}: </div>
 												<div className="attribute-values-container">
 													{attribute.type === "swatch"
 														? attribute.items.map((item, index2) => {

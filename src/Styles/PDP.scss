@@ -71,22 +71,23 @@
 		.item-attributes {
 			display: flex;
 			flex-direction: column;
-			gap: 5px;
+			gap: 15px;
 
 			.single-attribute {
 				display: flex;
 				flex-direction: column;
-				gap: 2.5px;
+				gap: 10px;
 
 				.attribute-name {
 					font-weight: 300;
-					font-size: smaller;
+					font-size: large;
+					font-weight: 500;
 				}
 
 				.attribute-values-container {
 					display: flex;
 					justify-content: flex-start;
-					gap: 5px;
+					gap: 15px;
 					align-items: center;
 
 					input[type='radio']:disabled {
@@ -110,8 +111,8 @@
 						}
 
 						.attribute-color {
-							width: 10px;
-							height: 10px;
+							width: 20px;
+							height: 20px;
 							border: .1px solid #000;
 						}
 
@@ -130,7 +131,8 @@
 					}
 
 					.button {
-						width: 40px;
+						width: 55px;
+						height: 20px;
 						position: relative;
 						display: flex;
 						justify-content: center;
@@ -154,6 +156,10 @@
 							text-align: center;
 							padding: 5px;
 							font-size: 10px;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							font-size: 15px;
 						}
 
 						input[type='radio']:checked + label {
@@ -223,7 +229,7 @@
 		text-transform: lowercase;
 		font-style: italic;
 		font-weight: 200;
-		overflow: scroll;
+		overflow: auto;
 		height: fit-content;
 		max-height: 160px;
 	}

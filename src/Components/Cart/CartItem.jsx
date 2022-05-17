@@ -53,7 +53,7 @@ class CartItem extends Component {
 							{this.props.data.attributes.map((attribute, index) => {
 								return (
 									<div className="single-attribute" key={index}>
-										<div className="attribute-name">{attribute.name}</div>
+										<div className="attribute-name">{attribute.name}: </div>
 										<div className="attribute-values-container">
 											{attribute.type === "swatch"
 												? attribute.items.map((item, index2) => {

@@ -52,7 +52,7 @@ class Cart extends Component {
 					</div>
 					{this.props.cart.map((data, index) => {
 						return (
-							<div key={index} style={{ width: "-webkit-fill-available" }}>
+							<div key={index} className='cart-item-holder'>
 								<CartItem data={data} />
 							</div>
 						);

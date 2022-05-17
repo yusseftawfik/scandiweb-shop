@@ -34,7 +34,7 @@ class Navbar extends Component {
 	handleCategory = (cartFromChildern) => {
 		this.setState({
 			openCart: cartFromChildern,
-			openCurrency: false
+			openCurrency: false,
 		});
 	};
 	closeCurrency = () => {
@@ -52,43 +52,37 @@ class Navbar extends Component {
 			<>
 				<div className="nav-bar">
 					<div className="categories">
-						{window.location.pathname.indexOf("/product/") === -1 ? (
-							this.props.data.loading ? null : (
-								this.props.data.categories.map((item, index) => {
-									return item.name === "all" ? (
-										<span
-											style={
-												!this.props.category ? this.selectedCategory : null
-											}
-											key={index}
-											onClick={() => {
-												this.props.changeCategory("");
-											}}
-										>
-											{item.name}
-										</span>
-									) : (
-										<span
-											style={
-												this.props.category === item.name
-													? this.selectedCategory
-													: null
-											}
-											key={index}
-											onClick={() => {
-												this.props.changeCategory(item.name);
-											}}
-										>
-											{item.name}
-										</span>
-									);
-								})
-							)
-						) : (
-							<span style={this.selectedCategory}>
-								{!this.props.category ? "All" : this.props.category}
-							</span>
-						)}
+						{this.props.data.loading
+							? null
+							: this.props.data.categories.map((item, index) => {
+								return item.name === "all" ? (
+									<span
+										style={
+											!this.props.category ? this.selectedCategory : null
+										}
+										key={index}
+										onClick={() => {
+											this.props.changeCategory("");
+										}}
+									>
+										{item.name}
+									</span>
+								) : (
+									<span
+										style={
+											this.props.category === item.name
+												? this.selectedCategory
+												: null
+										}
+										key={index}
+										onClick={() => {
+											this.props.changeCategory(item.name);
+										}}
+									>
+										{item.name}
+									</span>
+								);
+							})}
 					</div>
 					<div className="logo">
 						<Link to="/">
@@ -96,7 +90,7 @@ class Navbar extends Component {
 						</Link>
 					</div>
 					<div className="buttons">
-						<button className="currency" onMouseEnter={this.handleCurrency}>
+						<button className="currency" onClick={this.handleCurrency}>
 							<span>$</span>
 							<img
 								src={this.state.openCurrency ? arrowup : arrowdown}
@@ -111,7 +105,7 @@ class Navbar extends Component {
 						<button
 							disabled={this.props.cart.length === 0 ? "disabled" : null}
 							className="cart-btn"
-							onMouseEnter={this.handleCategory}
+							onClick={this.handleCategory}
 						>
 							{this.props.cart.length > 0 ? (
 								<div className="cart-counter">{this.props.cart.length}</div>

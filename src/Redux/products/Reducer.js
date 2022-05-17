@@ -30,6 +30,9 @@ const productReducer = (state = INITIAL_STATE, action) => {
 					? true
 					: false
 			);
+			// let selectedAttribute = item.attributes?.forEach((attribute) => {
+			// 	return { [`${item.name}-${attribute.name}`]: action.payload.value };
+			// });
 			let selectedAttribute = item.attributes?.map((att) => {
 				return { [`${item.name}-${att.name}`]: action.payload.value };
 			});
@@ -45,8 +48,9 @@ const productReducer = (state = INITIAL_STATE, action) => {
 								...item,
 								qty: item.qty + 1,
 							}
-							: item.id === action.payload.id ?
-								item : item
+							: item.id === action.payload.id
+								? item
+								: item
 					)
 					: [
 						...state.cart,

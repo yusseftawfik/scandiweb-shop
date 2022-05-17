@@ -53,7 +53,7 @@ class MiniCart extends Component {
 					<div className="mini-cart" ref={this.ctg}>
 						{this.props.cart.map((data, index) => {
 							return (
-								<div key={index} style={{ width: "-webkit-fill-available" }}>
+								<div key={index} className='cart-item-holder'>
 									<CartItem data={data} key={index} />
 								</div>
 							);

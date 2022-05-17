@@ -8,7 +8,8 @@
 	right: 60px;
 	top: 60px;
 	z-index: 1000;
-	overflow-x: scroll;
+	overflow-x: hidden;
+	overflow-y: auto;
 	padding: 20px 10px 0px;
 	display: flex;
 	flex-direction: column;
@@ -16,6 +17,10 @@
 	align-items: center;
 	gap: 25px;
 	background: #fff;
+
+	.cart-item-holder {
+		width: -webkit-fill-available;
+	}
 
 	&-summary {
 		width: -webkit-fill-available;
@@ -50,9 +55,6 @@
 	.btn-container {
 		display: flex;
 		justify-content: space-between;
-		// width: ;
-		// align-items: center;
-		// gap: 10px;
 
 		div {
 			display: flex;
