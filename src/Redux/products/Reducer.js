@@ -5,7 +5,7 @@ const INITIAL_STATE = {
 	currentItem: null,
 	cart: JSON.parse(localStorage.getItem("Cart")) || [],
 	currency: JSON.parse(localStorage.getItem("Currency")) || "USD",
-	category: JSON.parse(localStorage.getItem("Category")) || "",
+	category: JSON.parse(localStorage.getItem("Category")) || "all",
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -23,22 +23,18 @@ const productReducer = (state = INITIAL_STATE, action) => {
 		case actionTypes.ADD_TO_CART:
 			const item = state.data.find((item) => item.id === action.payload.id);
 			const inCart = state.cart.find((item) =>
-				item.id === action.payload.id &&
-					item.selectedAttribute.some(
-						(obj) => obj[action.payload.name] === action.payload.value
-					)
-					? true
+				item.id === action.payload.id
+					? // &&
+					// item.selectedAttribute.some(
+					// 	(obj) => obj[action.payload.name] === action.payload.value
+					// )
+					true
 					: false
 			);
-			// let selectedAttribute = item.attributes?.forEach((attribute) => {
-			// 	return { [`${item.name}-${attribute.name}`]: action.payload.value };
-			// });
-			let selectedAttribute = item.attributes?.map((att) => {
-				return { [`${item.name}-${att.name}`]: action.payload.value };
-			});
+			let selectedAttribute = [...action.payload.selectedAttribute];
 			let cartID = item.attributes
-				?.map((att) => `${item.id}-${att.name}-${action.payload.value}`)
-				.toString();
+				?.map((att) => `${item.id}-${att.name}-${att.items[0].value}`)
+				.join(" ", "-");
 			return {
 				...state,
 				cart: inCart

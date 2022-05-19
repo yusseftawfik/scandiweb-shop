@@ -3,9 +3,31 @@ import { graphql } from "@apollo/client/react/hoc";
 import { gql } from "@apollo/client";
 
 const CATEGOTY_QUERY = gql`
-  {
+ {
     categories {
       name
+      products {
+        id
+        name
+        inStock
+        gallery
+        category
+        brand
+        description
+        prices {
+          amount
+          currency {
+            label
+            symbol
+          }
+        }
+        attributes {
+          name
+          items {
+            displayValue
+          }
+        }
+      }
     }
   }
 `;

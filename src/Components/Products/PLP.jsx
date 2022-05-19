@@ -1,4 +1,3 @@
-//  product listing page
 import React from "react";
 import { connect } from "react-redux";
 import Navbar from "../Navbar/Navbar";
@@ -9,9 +8,10 @@ import { useQuery, gql } from "@apollo/client";
 import { setData } from '../../Redux/products/Actions';
 
 const PRODDUCT_QUERY = gql`
-{
-    category {
-    products {
+  {
+    categories {
+      name
+      products {
         id
         name
         inStock
@@ -20,28 +20,26 @@ const PRODDUCT_QUERY = gql`
         brand
         description
         prices {
-        	amount
-        	currency {
-            	label
-            	symbol
-        }
+          amount
+          currency {
+            label
+            symbol
+          }
         }
         attributes {
-        	name
-			type
-        	items {
-            	displayValue
-				value
+          name
+          items {
+            displayValue
+          }
         }
-        }
+      }
     }
-    }
-}
+  }
 `;
 
 const PLP = ({ category, setData }) => {
 	const { data, error, loading } = useQuery(PRODDUCT_QUERY, {
-		onCompleted: (data) => setData(data.category.products)
+		onCompleted: (data) => data.categories.map(cat => cat.name === category ? setData(cat.products) : null)
 	});
 	return (
 		<>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changeCategory } from "../../Redux/products/Actions";
+import { changeCategory, setData } from "../../Redux/products/Actions";
 import { Link } from "react-router-dom";
 import withCategory from "../../HOC/withCategory";
 import cart from "../../Assets/cart.svg";
@@ -47,6 +47,10 @@ class Navbar extends Component {
 		borderBottomWidth: 2,
 		transitionDuration: ".3s",
 	};
+	switchCategory = (name, products) => {
+		this.props.changeCategory(name);
+		this.props.setData(products);
+	}
 	render () {
 		return (
 			<>
@@ -54,34 +58,18 @@ class Navbar extends Component {
 					<div className="categories">
 						{this.props.data.loading
 							? null
-							: this.props.data.categories.map((item, index) => {
-								return item.name === "all" ? (
-									<span
-										style={
-											!this.props.category ? this.selectedCategory : null
-										}
-										key={index}
-										onClick={() => {
-											this.props.changeCategory("");
-										}}
-									>
-										{item.name}
-									</span>
-								) : (
-									<span
-										style={
-											this.props.category === item.name
-												? this.selectedCategory
-												: null
-										}
-										key={index}
-										onClick={() => {
-											this.props.changeCategory(item.name);
-										}}
-									>
-										{item.name}
-									</span>
-								);
+							: this.props.data.categories.map((cat, index) => {
+								return (<span
+									style={
+										this.props.category === cat.name
+											? this.selectedCategory
+											: null
+									}
+									key={index}
+									onClick={() => this.switchCategory(cat.name, cat.products)}
+								>
+									{cat.name}
+								</span>)
 							})}
 					</div>
 					<div className="logo">
@@ -134,6 +122,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		changeCategory: (name) => dispatch(changeCategory(name)),
+		setData: (data) => dispatch(setData(data))
 	};
 };
 export default withCategory(

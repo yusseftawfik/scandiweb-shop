@@ -13,31 +13,35 @@ class PDP extends Component {
 		super(props);
 		this.state = {
 			index: 0,
-			name: "",
-			value: "",
+			selectedAttribute: [],
+			value: '',
+			name: ''
 		};
 	}
 	handleChange = (e) => {
 		const { name, value } = e.target;
-		this.setState({
-			name: name,
+		this.setState((prevState) => ({
+			selectedAttribute: [...prevState.selectedAttribute, { attribute: name, value: value }],
 			value: value,
-		});
+			name: name
+		}));
 	};
 	handleSubmit = (e) => {
 		let cartID = this.props.currentItem.attributes
-			?.map((att) => `${this.props.currentItem.id}-${att.name}-${this.state.value}`)
-			.toString();
+			?.map(
+				(att) => `${this.props.currentItem.id}-${att.name}-${this.state.value}`
+			)
+			.join(" ", "-");
 		this.props.addToCart(
 			this.props.currentItem.id,
 			cartID,
-			this.state.name,
-			this.state.value
+			this.state.selectedAttribute,
 		);
 		e.preventDefault();
 	};
 	render () {
-		// console.log(this.props.currentItem.attributes.map(att => att))
+		// let exsist = this.state.selectedAttribute.find(att => this.state.name === att.attribute)
+		// console.log(exsist)
 		return (
 			<>
 				<Navbar />
@@ -144,9 +148,10 @@ class PDP extends Component {
 										className="addtocart-btn"
 										type="submit"
 										disabled={
-											this.props.currentItem.attributes.length > 0
-												? !this.state.value
-												: false
+											this.props.currentItem.attributes.length ===
+												this.state.selectedAttribute.length
+												? false
+												: true
 										}
 									>
 										add to cart
@@ -169,7 +174,8 @@ class PDP extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addToCart: (id, cartID, name, value) => dispatch(addToCart(id, cartID, name, value)),
+		addToCart: (id, cartID, selectedAttribute) =>
+			dispatch(addToCart(id, cartID, selectedAttribute)),
 	};
 };
 const mapStateToProps = (state) => {

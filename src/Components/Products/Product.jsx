@@ -1,91 +1,46 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { loadCurrentItems } from "../../Redux/products/Actions";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { loadCurrentItems, addToCart } from "../../Redux/products/Actions";
 import cart from "../../Assets/cart-white.svg";
 import "../../Styles/Product.scss";
 
 class Product extends Component {
+	componentDidUpdate () {
+		localStorage.setItem("Cart", JSON.stringify(this.props.cart));
+	}
 	render () {
 		return (
 			<>
-				{!this.props.category
-					? this.props.data.category.products.map((product, index) => {
-						let price = product.prices.find(
-							(item) => item.currency.label === this.props.currency
-						);
-						return (
-							<div key={index}>
-								<div
-									className="prd-container"
-									onClick={() =>
-										this.props.loadCurrentItems({ ...product, price })
-									}
-								>
-									<Link to={`/product/${product.id}`}>
-										{product.inStock ? null : (
-											<div className="out-of-stock">
-												<span>out of stock</span>
-											</div>
-										)}
-										<div
-											className="product"
-											style={{ opacity: product.inStock ? "1" : "0.25" }}
-										>
-											<div className="product-image">
-												<img
-													width="300"
-													height="auto"
-													src={product.gallery[0]}
-													alt={product.id}
-												/>
-												{product.inStock ? (
-													<div className="add-to-cart">
-														<img
-															width="25"
-															height="25"
-															src={cart}
-															alt={product.id}
-														/>
-													</div>
-												) : null}
-											</div>
-											<div className="product-name">
-												<span>{product.brand}</span>
-												<span>{product.name}</span>
-											</div>
-											<div className="product-price">
-												<span>{price.currency.symbol}</span>
-												<span>{price.amount}</span>
-											</div>
-										</div>
-									</Link>
-								</div>
-							</div>
-						);
-					})
-					: this.props.data.category.products
-						.filter((item) => item.category === this.props.category)
-						.map((product, index) => {
+				{this.props.data.categories?.map((cat) =>
+					cat.name === this.props.category
+						? cat.products.map((product, index) => {
 							let price = product.prices.find(
 								(item) => item.currency.label === this.props.currency
 							);
+							let cartID = product.attributes
+								?.map(
+									(att) => `${product.id}-${att.name}-${att.items[0].value}`
+								)
+								.join(" ", "-");
+							let selectedAttribute = product.attributes.map((att) => ({
+								[`${product.name}-${att.name}`]: att.items[0].value,
+							}));
 							return (
-								<div key={index}>
-									<div
-										className="prd-container"
-										onClick={() =>
-											this.props.loadCurrentItems({
-												...product,
-												price,
-											})
-										}
-									>
-										<Link to={`/product/${product.id}`}>
+								<>
+									<div key={index}>
+										<div className="prd-container">
 											{product.inStock ? null : (
-												<div className="out-of-stock">
-													<span>out of stock</span>
-												</div>
+												<Link
+													to={`${cat.name}/product/${product.id}`}
+													onClick={() =>
+														this.props.loadCurrentItems({ ...product, price })
+													}
+												>
+													<div className="out-of-stock">
+														<span>out of stock</span>
+													</div>
+												</Link>
 											)}
 											<div
 												className="product"
@@ -95,11 +50,20 @@ class Product extends Component {
 													<img
 														width="300"
 														height="auto"
-														src={product.gallery[0]}
+														src={product.gallery ? product.gallery[0] : null}
 														alt={product.id}
 													/>
 													{product.inStock ? (
-														<div className="add-to-cart">
+														<div
+															className="add-to-cart"
+															onClick={() =>
+																this.props.addToCart(
+																	product.id,
+																	cartID,
+																	selectedAttribute
+																)
+															}
+														>
 															<img
 																width="25"
 																height="25"
@@ -111,18 +75,30 @@ class Product extends Component {
 												</div>
 												<div className="product-name">
 													<span>{product.brand}</span>
-													<span>{product.name}</span>
+													<Link
+														to={`${cat.name}/product/${product.id}`}
+														onClick={() =>
+															this.props.loadCurrentItems({
+																...product,
+																price,
+															})
+														}
+													>
+														<span>{product.name}</span>
+													</Link>
 												</div>
 												<div className="product-price">
 													<span>{price.currency.symbol}</span>
 													<span>{price.amount}</span>
 												</div>
 											</div>
-										</Link>
+										</div>
 									</div>
-								</div>
+								</>
 							);
-						})}
+						})
+						: null
+				)}
 			</>
 		);
 	}
@@ -130,6 +106,8 @@ class Product extends Component {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		loadCurrentItems: (item) => dispatch(loadCurrentItems(item)),
+		addToCart: (id, cartID, selectedAttribute) =>
+			dispatch(addToCart(id, cartID, selectedAttribute)),
 	};
 };
 const mapStateToProps = (state) => {

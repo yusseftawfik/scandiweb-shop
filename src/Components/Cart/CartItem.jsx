@@ -68,13 +68,10 @@ class CartItem extends Component {
 																)}
 																disabled
 																type="radio"
-																name={`${this.props.data.cartID}-${attribute.name}`}
-																value={item.value}
 																className="attributes-value"
 															/>
 															<label
 																key={index}
-																htmlFor={`${this.props.data.cartID}-${attribute.name}`}
 																className="attribute-color"
 																style={{ background: `${item.value}` }}
 															></label>
@@ -85,7 +82,6 @@ class CartItem extends Component {
 													return (
 														<div className="button" key={index3}>
 															<input
-																onChange={this.handleChange}
 																checked={this.props.data.selectedAttribute.find(
 																	(att) =>
 																		att[
@@ -94,13 +90,10 @@ class CartItem extends Component {
 																)}
 																disabled
 																type="radio"
-																name={`${this.props.data.cartID}-${attribute.name}`}
-																value={item.value}
 																className="attributes-value"
 															/>
 															<label
 																className="attributes-label"
-																htmlFor={`${this.props.data.cartID}-${attribute.name}`}
 															>
 																{item.value}
 															</label>

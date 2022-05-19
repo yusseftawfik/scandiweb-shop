@@ -24,9 +24,9 @@ class App extends Component {
             {
               !this.props.currentItem
                 ?
-                <Route path="/product/:id" element={<Navigate to="/" />} />
+                <Route path="/:category/product/:id" element={<Navigate to="/" />} />
                 :
-                <Route path="/product/:id" element={<PDP />} />
+                <Route path="/:category/product/:id" element={<PDP />} />
             }
             <Route path="checkout" element={<Checkout />} />
             <Route path="*" element={<NotFound />} />
