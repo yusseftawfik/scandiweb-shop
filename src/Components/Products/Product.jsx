@@ -12,7 +12,7 @@ class Product extends Component {
 	render () {
 		return (
 			<>
-				{this.props.data.categories?.map((cat) =>
+				{this.props.data.categories?.map((cat, index) =>
 					cat.name === this.props.category
 						? cat.products.map((product, index) => {
 							let price = product.prices.find(
@@ -27,7 +27,7 @@ class Product extends Component {
 								[`${product.name}-${att.name}`]: att.items[0].value,
 							}));
 							return (
-								<>
+								<div key={index}>
 									<div key={index}>
 										<div className="prd-container">
 											{product.inStock ? null : (
@@ -94,7 +94,7 @@ class Product extends Component {
 											</div>
 										</div>
 									</div>
-								</>
+								</div>
 							);
 						})
 						: null

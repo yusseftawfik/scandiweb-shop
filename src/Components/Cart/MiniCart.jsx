@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import "../../Styles/MiniCart.scss";
+
 class MiniCart extends Component {
 	constructor(props) {
 		super(props);
@@ -50,30 +51,32 @@ class MiniCart extends Component {
 		return (
 			<>
 				{this.props.cart.length > 0 ? (
-					<div className="mini-cart" ref={this.ctg}>
-						{this.props.cart.map((data, index) => {
-							return (
-								<div key={index} className='cart-item-holder'>
-									<CartItem data={data} key={index} />
+					<div className="backdrop">
+						<div className="mini-cart" ref={this.ctg}>
+							{this.props.cart.map((data, index) => {
+								return (
+									<div key={index} className="cart-item-holder">
+										<CartItem data={data} key={index} />
+									</div>
+								);
+							})}
+							<div className="mini-cart-summary">
+								<div className="price-container">
+									<span>Total</span>
+									<span>
+										{this.state.cartTotalPrice.toLocaleString("en-US", {
+											style: "currency",
+											currency: this.props.currency,
+										})}
+									</span>
 								</div>
-							);
-						})}
-						<div className="mini-cart-summary">
-							<div className="price-container">
-								<span>Total</span>
-								<span>
-									{this.state.cartTotalPrice.toLocaleString("en-US", {
-										style: "currency",
-										currency: this.props.currency,
-									})}
-								</span>
-							</div>
-							<div className="btn-container">
-								<div>
-									<Link to="/cart">view bag</Link>
-								</div>
-								<div className="checkout-btn">
-									<Link to="/checkout">checkout</Link>
+								<div className="btn-container">
+									<div>
+										<Link to="/cart">view bag</Link>
+									</div>
+									<div className="checkout-btn">
+										<Link to="/checkout">checkout</Link>
+									</div>
 								</div>
 							</div>
 						</div>

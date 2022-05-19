@@ -103,7 +103,6 @@ class Navbar extends Component {
 						{this.state.openCart && (
 							<>
 								<MiniCart handleCategory={this.handleCategory} />
-								<div className="backdrop"></div>
 							</>
 						)}
 					</div>

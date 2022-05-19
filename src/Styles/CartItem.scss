@@ -1,7 +1,7 @@
 .cart-item {
 	display: flex;
 	justify-content: space-between;
-	padding: 15px;
+	padding: 5px;
 	height: fit-content;
 	box-shadow: 0px 4px 5px 0px #a8acb010;
 
@@ -10,7 +10,6 @@
 		flex-direction: column;
 		justify-content: space-between;
 		gap: 5px;
-		padding: 0 5px;
 
 		.item-brand {
 			font-weight: 100;
