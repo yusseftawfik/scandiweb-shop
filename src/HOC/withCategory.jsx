@@ -23,8 +23,9 @@ const CATEGOTY_QUERY = gql`
         }
         attributes {
           name
+          type
           items {
-            displayValue
+            value
           }
         }
       }
@@ -33,11 +34,11 @@ const CATEGOTY_QUERY = gql`
 `;
 
 const withCategory = AnyComponent => {
-	class Category extends Component {
-		render () {
-			return <AnyComponent data={this.props.data} {...this.props} />
-		}
-	}
-	return graphql(CATEGOTY_QUERY)(Category);
+  class Category extends Component {
+    render () {
+      return <AnyComponent data={this.props.data} {...this.props} />
+    }
+  }
+  return graphql(CATEGOTY_QUERY)(Category);
 }
 export default withCategory;

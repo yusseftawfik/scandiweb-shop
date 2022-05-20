@@ -5,7 +5,7 @@ import Product from "./Product";
 import Spinner from "./Spinner";
 import "../../Styles/PLP.scss";
 import { useQuery, gql } from "@apollo/client";
-import { setData } from '../../Redux/products/Actions';
+import { setData } from "../../Redux/products/Actions";
 
 const PRODDUCT_QUERY = gql`
   {
@@ -28,8 +28,9 @@ const PRODDUCT_QUERY = gql`
         }
         attributes {
           name
+          type
           items {
-            displayValue
+            value
           }
         }
       }
@@ -39,7 +40,10 @@ const PRODDUCT_QUERY = gql`
 
 const PLP = ({ category, setData }) => {
 	const { data, error, loading } = useQuery(PRODDUCT_QUERY, {
-		onCompleted: (data) => data.categories.map(cat => cat.name === category ? setData(cat.products) : null)
+		onCompleted: (data) =>
+			data.categories.map((cat) =>
+				cat.name === category ? setData(cat.products) : null
+			),
 	});
 	return (
 		<>
@@ -68,7 +72,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		setData: (data) => dispatch(setData(data))
-	}
-}
+		setData: (data) => dispatch(setData(data)),
+	};
+};
 export default connect(mapStateToProps, mapDispatchToProps)(PLP);

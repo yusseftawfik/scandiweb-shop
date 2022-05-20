@@ -52,8 +52,8 @@
 
 		.product-name {
 			p {
-				font-size: 25px;
-				font-weight: 300;
+				font-size: 30px;
+				font-weight: 400;
 				letter-spacing: -2px;
 
 				&::first-line {
@@ -62,8 +62,8 @@
 			}
 
 			span {
-				font-size: smaller;
-				font-weight: 200;
+				font-size: 30px;
+				font-weight: 700;
 				font-style: italic;
 			}
 		}
@@ -79,9 +79,8 @@
 				gap: 10px;
 
 				.attribute-name {
-					font-weight: 300;
-					font-size: large;
-					font-weight: 500;
+					font-size: 18px;
+					font-weight: 700;
 				}
 
 				.attribute-values-container {
@@ -97,9 +96,6 @@
 
 					.button-color {
 						position: relative;
-						display: flex;
-						justify-content: center;
-						align-items: center;
 
 						.attributes-value {
 							width: 100%;
@@ -111,9 +107,12 @@
 						}
 
 						.attribute-color {
-							width: 20px;
-							height: 20px;
+							width: 35px;
+							height: 35px;
 							border: .1px solid #000;
+							display: flex;
+							justify-content: center;
+							align-items: center;
 						}
 
 						input[type='radio']:checked + label {
@@ -131,12 +130,7 @@
 					}
 
 					.button {
-						width: 55px;
-						height: 20px;
 						position: relative;
-						display: flex;
-						justify-content: center;
-						align-items: center;
 
 						.attributes-value {
 							width: 100%;
@@ -148,18 +142,17 @@
 						}
 
 						.attributes-label {
-							width: 100%;
-							height: 100%;
+							width: 65px;
+							height: 45px;
 							border: #000 solid 1px;
 							background: #fff;
 							color: #000;
 							text-align: center;
-							padding: 5px;
-							font-size: 10px;
 							display: flex;
 							justify-content: center;
 							align-items: center;
-							font-size: 15px;
+							font-size: 16px;
+							font-weight: 400;
 						}
 
 						input[type='radio']:checked + label {
@@ -186,14 +179,8 @@
 			align-items: flex-start;
 			gap: 15px;
 
-			span:nth-child(1) {
-				font-size: 18px;
-				font-weight: 600;
-				text-transform: uppercase;
-			}
-
-			span:nth-child(2) {
-				font-size: 22px;
+			.item-price {
+				font-size: 24px;
 				font-weight: 700;
 			}
 		}
@@ -225,10 +212,10 @@
 	}
 
 	.description {
-		font-size: 20px;
+		font-size: 16px;
 		text-transform: lowercase;
 		font-style: italic;
-		font-weight: 200;
+		font-weight: 400;
 		overflow: auto;
 		height: fit-content;
 		max-height: 160px;
