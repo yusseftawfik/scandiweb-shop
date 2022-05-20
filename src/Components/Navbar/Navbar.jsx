@@ -50,7 +50,11 @@ class Navbar extends Component {
 	switchCategory = (name, products) => {
 		this.props.changeCategory(name);
 		this.props.setData(products);
-	}
+		const { pathname } = window.location;
+		pathname !== "/"
+			? (window.location.href = "/")
+			: console.log("you are in home page");
+	};
 	render () {
 		return (
 			<>
@@ -59,17 +63,21 @@ class Navbar extends Component {
 						{this.props.data.loading
 							? null
 							: this.props.data.categories.map((cat, index) => {
-								return (<span
-									style={
-										this.props.category === cat.name
-											? this.selectedCategory
-											: null
-									}
-									key={index}
-									onClick={() => this.switchCategory(cat.name, cat.products)}
-								>
-									{cat.name}
-								</span>)
+								return (
+									<span
+										style={
+											this.props.category === cat.name
+												? this.selectedCategory
+												: null
+										}
+										key={index}
+										onClick={() =>
+											this.switchCategory(cat.name, cat.products)
+										}
+									>
+										{cat.name}
+									</span>
+								);
 							})}
 					</div>
 					<div className="logo">
@@ -121,7 +129,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		changeCategory: (name) => dispatch(changeCategory(name)),
-		setData: (data) => dispatch(setData(data))
+		setData: (data) => dispatch(setData(data)),
 	};
 };
 export default withCategory(

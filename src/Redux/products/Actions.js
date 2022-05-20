@@ -16,13 +16,14 @@ export const setCategory = (value) => {
 		},
 	};
 };
-export const addToCart = (itemID, cartID, selectedAttribute) => {
+export const addToCart = (itemID, cartID, selectedAttribute, specialValue) => {
 	return {
 		type: actionTypes.ADD_TO_CART,
 		payload: {
 			id: itemID,
 			cartID: cartID,
 			selectedAttribute: [...selectedAttribute],
+			specialValue: specialValue,
 		},
 	};
 };

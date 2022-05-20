@@ -14,28 +14,30 @@ class PDP extends Component {
 		this.state = {
 			index: 0,
 			selectedAttribute: [],
-			value: '',
-			name: ''
+			specialValue: "",
 		};
 	}
 	handleChange = (e) => {
 		const { name, value } = e.target;
 		this.setState((prevState) => ({
-			selectedAttribute: [...prevState.selectedAttribute, { attribute: name, value: value }],
-			value: value,
-			name: name
+			specialValue: value,
+			selectedAttribute: [...prevState.selectedAttribute, { [name]: value }],
 		}));
 	};
 	handleSubmit = (e) => {
 		let cartID = this.props.currentItem.attributes
 			?.map(
-				(att) => `${this.props.currentItem.id}-${att.name}-${this.state.value}`
+				(att, i) =>
+					`${this.props.currentItem.id}-${att.name}-${[
+						this.state.specialValue,
+					]}`
 			)
-			.join(" ", "-");
+			.join("-");
 		this.props.addToCart(
 			this.props.currentItem.id,
 			cartID,
 			this.state.selectedAttribute,
+			this.state.specialValue
 		);
 		e.preventDefault();
 	};
@@ -174,8 +176,8 @@ class PDP extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addToCart: (id, cartID, selectedAttribute) =>
-			dispatch(addToCart(id, cartID, selectedAttribute)),
+		addToCart: (id, cartID, selectedAttribute, specialValue) =>
+			dispatch(addToCart(id, cartID, selectedAttribute, specialValue)),
 	};
 };
 const mapStateToProps = (state) => {
@@ -187,3 +189,37 @@ const mapStateToProps = (state) => {
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PDP);
+
+// send by default
+// let cartID = product.attributes
+// 	?.map(
+// 		(att) => `${product.id}-${att.name}-${att.items[0].value}`
+// 	)
+// 	.join(" ", "-");
+// let selectedAttribute = product.attributes.map((att) => ({
+// 	[`${product.name}-${att.name}`]: att.items[0].value,
+// }));
+
+// cartID in the reducer
+// let cartID = item.attributes
+// 	?.map((att) => `${item.id}-${att.name}-${att.items[0].value}`)
+// 	.join(" ", "-");
+
+// عايز اعمل كارت اي دي مميز من جوا صفحة المنتج يبقا شبه الي موجود في الريديوسر
+//  في نفس الوقت عايز لما اضيف اوبجكت جوا الاتريبيوت اراي يتأكد ان
+// المفتاح ده مش موجود جوا اي اوبجكت فيهم ولو موجود يمسح القديم ويضيف الجديد
+// عشان يفضل دايما طول الاتريبيوت المختار قد الاتربيوت الي بيجي مع المنتج
+
+// let specialValue;
+// let cartID = product.attributes
+// 	?.map(
+// 		(att) => {
+// 			specialValue = att.items[0].value
+// 			return (`${product.id}-${att.name}-${specialValue}`
+// 			)
+// 		}
+// 	)
+// 	.join(" ", "-");
+// let selectedAttribute = product.attributes.map((att) => ({
+// 	[`${product.name}-${att.name}`]: att.items[0].value,
+// }));

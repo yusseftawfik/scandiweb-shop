@@ -1,3 +1,33 @@
+.page {
+	position: relative;
+
+	&:hover {
+		.add-to-cart {
+			visibility: visible;
+		}
+	}
+
+	.add-to-cart {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: var(--primary-color);
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		position: absolute;
+		bottom: 100px;
+		right: 10px;
+		box-shadow: 0px 4px 11px 0px #1d1f221a;
+		visibility: hidden;
+
+		&:hover {
+			transform: scale(1.75);
+			transition-duration: 0.3s;
+		}
+	}
+}
+
 .product {
 	width: 300px;
 	max-width: 300px;
@@ -11,12 +41,8 @@
 	box-shadow: 0px 4px 5px 0px #a8acb010;
 
 	&:hover {
-		box-shadow: 0px 4px 35px 0px #A8ACB030;
-		transition-duration: .3s;
-
-		.add-to-cart {
-			visibility: visible;
-		}
+		box-shadow: 0px 4px 35px 0px #a8acb030;
+		transition-duration: 0.3s;
 	}
 
 	&-image {
@@ -33,44 +59,18 @@
 			max-width: 300px;
 			max-height: 300px;
 		}
-
-		.add-to-cart {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background: var(--primary-color);
-			width: 35px;
-			height: 35px;
-			border-radius: 50%;
-			position: absolute;
-			bottom: -10px;
-			right: 10px;
-			box-shadow: 0px 4px 11px 0px #1D1F221A;
-			visibility: hidden;
-
-			&:hover {
-				transform: scale(1.75);
-				transition-duration: .3s;
-			}
-		}
 	}
 
 	&-name {
 		display: flex;
 		flex-direction: column;
 		font-weight: 300;
-
-		&:hover {
-			a {
-				span {
-					color: var(--primary-color);
-				}
-			}
-		}
+		font-size: 18px;
 	}
 
 	&-price {
-		font-weight: 600;
+		font-weight: 500;
+		font-size: 18px;
 		display: flex;
 		align-items: center;
 		justify-content: flex-start;
@@ -88,7 +88,7 @@
 	top: 0;
 	right: 0;
 	text-transform: uppercase;
-	color: #8D8F9A;
+	color: #8d8f9a;
 	background: transparent;
 	width: 100%;
 	height: 90%;
@@ -103,14 +103,14 @@
 		span {
 			font-weight: 500;
 			border: 0;
-			transition-duration: .3s;
+			transition-duration: 0.3s;
 		}
 	}
 
 	span {
-		border: 0.1px solid #8D8F9A50;
+		border: 0.1px solid #8d8f9a50;
 		padding: 0px 15px;
 		font-weight: 100;
-		transition-duration: .3s;
+		transition-duration: 0.3s;
 	}
 }

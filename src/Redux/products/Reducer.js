@@ -23,18 +23,12 @@ const productReducer = (state = INITIAL_STATE, action) => {
 		case actionTypes.ADD_TO_CART:
 			const item = state.data.find((item) => item.id === action.payload.id);
 			const inCart = state.cart.find((item) =>
-				item.id === action.payload.id
-					? // &&
-					// item.selectedAttribute.some(
-					// 	(obj) => obj[action.payload.name] === action.payload.value
-					// )
-					true
-					: false
+				item.cartID === action.payload.cartID ? true : false
 			);
 			let selectedAttribute = [...action.payload.selectedAttribute];
 			let cartID = item.attributes
-				?.map((att) => `${item.id}-${att.name}-${att.items[0].value}`)
-				.join(" ", "-");
+				?.map((att) => `${item.id}-${att.name}-${action.payload.specialValue}`)
+				.join("-");
 			return {
 				...state,
 				cart: inCart
