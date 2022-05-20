@@ -15,12 +15,15 @@ class PDP extends Component {
 			index: 0,
 			selectedAttribute: [],
 			specialValue: "",
+			name: "",
 		};
 	}
 	handleChange = (e) => {
 		const { name, value } = e.target;
+		// const inAttributes = this.state.selectedAttribute.find((obj) => this.state.name === name);
 		this.setState((prevState) => ({
 			specialValue: value,
+			name: name,
 			selectedAttribute: [...prevState.selectedAttribute, { [name]: value }],
 		}));
 	};
@@ -39,11 +42,23 @@ class PDP extends Component {
 			this.state.selectedAttribute,
 			this.state.specialValue
 		);
+		this.setState({
+			selectedAttribute: [],
+		});
+		e.target.reset();
 		e.preventDefault();
 	};
 	render () {
-		// let exsist = this.state.selectedAttribute.find(att => this.state.name === att.attribute)
-		// console.log(exsist)
+		// let keys = this.state.selectedAttribute.some(
+		// (element) => this.state.selectedAttribute.indexOf(element) !== -1);
+		// console.log('keys', keys)
+		// let keys = this.state.selectedAttribute.map((v) => v.key)
+		// console.log('keys', keys)
+		// console.log("this.state.selectedAttribute", this.state.selectedAttribute);
+		// const neededKey = this.state.name;
+		// const item = this.state.selectedAttribute.filter((item) =>
+		// 	console.log("item", item.hasOwnProperty(neededKey))
+		// );
 		return (
 			<>
 				<Navbar />

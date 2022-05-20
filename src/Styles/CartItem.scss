@@ -1,7 +1,7 @@
 .cart-item {
 	display: flex;
 	justify-content: space-between;
-	padding: 5px;
+	padding: 15px;
 	height: fit-content;
 	box-shadow: 0px 4px 5px 0px #a8acb010;
 
@@ -12,19 +12,19 @@
 		gap: 5px;
 
 		.item-brand {
-			font-weight: 100;
-			font-size: smaller;
+			font-weight: 600;
+			font-size: 25px;
 		}
 
 		.item-name {
-			font-weight: 300;
-			font-size: larger;
+			font-weight: 400;
+			font-size: 25px;
 			text-align: start;
 		}
 
 		.item-price {
-			font-weight: 500;
-			font-size: larger;
+			font-weight: 700;
+			font-size: 20px;
 		}
 
 		.item-attributes {
@@ -38,14 +38,14 @@
 				gap: 2.5px;
 
 				.attribute-name {
-					font-weight: 500;
-					font-size: smaller;
+					font-weight: 700;
+					font-size: 18px;
 				}
 
 				.attribute-values-container {
 					display: flex;
 					justify-content: flex-start;
-					gap: 5px;
+					gap: 7.5px;
 					align-items: center;
 
 					.button-color {
@@ -58,8 +58,8 @@
 						}
 
 						.attribute-color {
-							width: 15px;
-							height: 15px;
+							width: 25px;
+							height: 25px;
 							border: .1px solid #000;
 							display: flex;
 							justify-content: center;
@@ -68,7 +68,7 @@
 
 						input[type='radio']:checked + label {
 							outline: 2px solid var(--primary-color);
-							outline-offset: 1px;
+							outline-offset: 2px;
 							border: 0;
 						}
 					}
@@ -86,12 +86,12 @@
 							border: #000 solid 1px;
 							background: #fff;
 							color: #000;
-							width: 25px;
-							height: 25px;
+							width: 35px;
+							height: 35px;
 							display: flex;
 							justify-content: center;
 							align-items: center;
-							font-size: 8px;
+							font-size: 11px;
 							font-weight: 500;
 						}
 
