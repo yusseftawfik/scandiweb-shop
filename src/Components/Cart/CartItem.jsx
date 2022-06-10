@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { removeFromCart, adjustQty } from "../../Redux/products/Actions";
 import remove from "../../Assets/remove.svg";
 import "../../Styles/CartItem.scss";
 
-class CartItem extends Component {
+class CartItem extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import "../../Styles/MiniCart.scss";
 
-class MiniCart extends Component {
+class MiniCart extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
