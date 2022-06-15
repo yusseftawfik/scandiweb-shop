@@ -51,8 +51,8 @@ class Navbar extends Component {
 		this.props.changeCategory(name);
 		this.props.setData(products);
 		const { pathname } = window.location;
-		pathname !== "/"
-			? (window.location.href = "/")
+		pathname !== "/scandiweb-shop"
+			? (window.location.href = "/scandiweb-shop")
 			: console.log("you are in home page");
 	};
 	render () {

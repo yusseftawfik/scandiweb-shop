@@ -32,7 +32,7 @@ class Product extends Component {
 								<div key={index} className="page">
 									<div key={index}>
 										<Link
-											to={`${cat.name}/product/${product.id}`}
+											to={`/scandiweb-shop/${cat.name}/product/${product.id}`}
 											onClick={() =>
 												this.props.loadCurrentItems({ ...product, price })
 											}
