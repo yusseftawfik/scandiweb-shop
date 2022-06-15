@@ -14,6 +14,7 @@ class App extends Component {
         <BrowserRouter>
           <Routes>
             <Route exact path="/" element={<PLP />} />
+            <Route exact path="/scandiweb-shop" element={<PLP />} />
             {
               !this.props.cart.length
                 ?

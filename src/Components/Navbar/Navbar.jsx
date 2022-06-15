@@ -81,7 +81,7 @@ class Navbar extends Component {
 							})}
 					</div>
 					<div className="logo">
-						<Link to="/">
+						<Link to="/scandiweb-shop">
 							<img src={logo} alt="logo" width="41" height="41" />
 						</Link>
 					</div>
