@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.4d46b92d.css",
-    "main.js": "/static/js/main.b4d3e4cf.js",
-    "static/media/logo.svg": "/static/media/logo.70d7f9e5edaf987e506ff32784cf5cf3.svg",
-    "static/media/cart-white.svg": "/static/media/cart-white.02a2740c3a97a788676f5fd179905276.svg",
-    "static/media/cart.svg": "/static/media/cart.855ade25ff9bf383de8635b06aa42c80.svg",
-    "index.html": "/index.html",
-    "static/media/remove.svg": "/static/media/remove.c23fe28ccc7d92fc8ad2e461ef99d2a0.svg",
-    "static/media/trash.svg": "/static/media/trash.e55f99dd8a3d1746e67a09903792b42b.svg",
-    "static/media/arrowup.svg": "/static/media/arrowup.942c388d53bdb96e98c9c49d894bc295.svg",
-    "static/media/arrowdown.svg": "/static/media/arrowdown.766d7b11f183f77a1e40c47ea18dd7ee.svg",
-    "main.4d46b92d.css.map": "/static/css/main.4d46b92d.css.map",
-    "main.b4d3e4cf.js.map": "/static/js/main.b4d3e4cf.js.map"
+    "main.css": "/scandiweb-shop/static/css/main.4d46b92d.css",
+    "main.js": "/scandiweb-shop/static/js/main.3cbab8b3.js",
+    "static/media/logo.svg": "/scandiweb-shop/static/media/logo.70d7f9e5edaf987e506ff32784cf5cf3.svg",
+    "static/media/cart-white.svg": "/scandiweb-shop/static/media/cart-white.02a2740c3a97a788676f5fd179905276.svg",
+    "static/media/cart.svg": "/scandiweb-shop/static/media/cart.855ade25ff9bf383de8635b06aa42c80.svg",
+    "index.html": "/scandiweb-shop/index.html",
+    "static/media/remove.svg": "/scandiweb-shop/static/media/remove.c23fe28ccc7d92fc8ad2e461ef99d2a0.svg",
+    "static/media/trash.svg": "/scandiweb-shop/static/media/trash.e55f99dd8a3d1746e67a09903792b42b.svg",
+    "static/media/arrowup.svg": "/scandiweb-shop/static/media/arrowup.942c388d53bdb96e98c9c49d894bc295.svg",
+    "static/media/arrowdown.svg": "/scandiweb-shop/static/media/arrowdown.766d7b11f183f77a1e40c47ea18dd7ee.svg",
+    "main.4d46b92d.css.map": "/scandiweb-shop/static/css/main.4d46b92d.css.map",
+    "main.3cbab8b3.js.map": "/scandiweb-shop/static/js/main.3cbab8b3.js.map"
   },
   "entrypoints": [
     "static/css/main.4d46b92d.css",
-    "static/js/main.b4d3e4cf.js"
+    "static/js/main.3cbab8b3.js"
   ]
 }
